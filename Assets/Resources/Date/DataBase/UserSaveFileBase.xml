@@ -1,0 +1,34 @@
+<SaveGameInformation>
+  <Save_PlayerFeatures>
+    <Save_PlayerFeatureBase 
+	mainMoney="0" 
+	specialMoney="0" 
+	experience="0" 
+	selectedSkinId = "1"
+	playerDistanceRecord = "0"/>
+    <Save_PlayerFeatureOptions language="0" isMusic="0" isAd="1" isFinishedTutorial="false"/>
+    
+  </Save_PlayerFeatures>
+    
+	<Save_WorldObjects>
+		<Save_Items>
+		</Save_Items>
+		<Save_Skins>
+			<SaveSkinItem id="1" isLock="false" />
+		</Save_Skins>
+		<Save_Achivments>
+		</Save_Achivments>
+	</Save_WorldObjects>
+	
+	<Save_Upgrades>
+		<Save_Upgrade_Items>
+			<Save_New_Items>
+			</Save_New_Items>
+			<Save_Boost_Items>
+			</Save_Boost_Items>
+			<Save_UpdateBoost_Items>
+			</Save_UpdateBoost_Items>
+		</Save_Upgrade_Items>
+	</Save_Upgrades>
+	
+</SaveGameInformation>

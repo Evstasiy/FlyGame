@@ -1,0 +1,161 @@
+<GameLocalization>
+  <UI_Localization>
+    <item id = "1" mainDescription = "Играть"/>
+    <item id = "2" mainDescription = "Бусты" />
+    <item id = "3" mainDescription = "Улучшения"/>
+    <item id = "4" mainDescription = "Скины"/>
+    <item id = "5" mainDescription = "Достижения" />
+    <item id = "6" mainDescription = "Меню" />
+    <item id = "7" mainDescription = "Продолжить"/>
+    <item id = "8" mainDescription = "Выбрано"/>
+    <item id = "9" mainDescription = "Выбрать"/>
+    <item id = "10" mainDescription = "Купить"/>
+    <item id = "11" mainDescription = "Вы уверены, что хотите завершить полет?"/>
+    <item id = "12" mainDescription = "Пауза"/>
+    <item id = "13" mainDescription = "Продолжить"/>
+    <item id = "14" mainDescription = "Главное меню"/>
+    <item id = "15" mainDescription = "км/ч"/>
+    <item id = "16" mainDescription = "Слишком низко!"/>
+    <item id = "17" mainDescription = "Слишком высоко!"/>
+    <item id = "18" mainDescription = "Достижения"/>
+    <item id = "19" mainDescription = "Купить"/>
+    <item id = "20" mainDescription = "Эффект сейчас:"/>
+	
+    <item id = "21" mainDescription = "Инфо."/>
+    <item id = "22" mainDescription = "Об эффектах"/>
+    <item id = "23" mainDescription = "Существуют 2 типа эффектов — негативные и положительные. Негативные эффекты накладываются на героя от разных существ и всячески мешают его полету. Положительные эффекты помогают герою в полете."/>
+    <item id = "24" mainDescription = "Положительный эффект 'Джетпак' дает герою маневренность и прибавку скорости."/>
+    <item id = "25" mainDescription = "Положительный эффект 'Магнит' притягивает все положительные эффекты и монеты к герою."/>
+    <item id = "26" mainDescription = "Положительный эффект 'Щит' дает герою защиту от негативных эффектов."/>
+    <item id = "27" mainDescription = "Положительный эффект 'Ускоритель' дает герою прибавку скорости."/>
+    <item id = "28" mainDescription = "Негативный эффект 'Улитка' снижает скорость героя."/>
+    <item id = "29" mainDescription = "Обучение заново"/>
+    <item id = "30" mainDescription = "Негативный эффект 'Головокружение' снижает маневренность героя."/>
+    <item id = "31" mainDescription = "Обучение"/>
+    <item id = "32" mainDescription = "Сбросить сохранения"/>
+    <item id = "33" mainDescription = "Все данные сбросятся, рекорды в таблице лидеров будут записываться сначала, начнется новая игра. Все равно продолжить?"/>
+    <item id = "34" mainDescription = "Конец игры"/>
+    <item id = "35" mainDescription = "Дистанция:"/>
+    <item id = "36" mainDescription = "Рекорд:"/>
+    <item id = "37" mainDescription = "В следующий полет попробуй взлететь высоко вверх, там тебя ждет новый уровень!"/>
+    
+    <item id = "50" mainDescription = "Земля"/>
+    <item id = "51" mainDescription = "Облака"/>
+    <item id = "52" mainDescription = "Космос"/>
+	
+    <item id = "70" mainDescription = "Магазин"/>
+    <item id = "71" mainDescription = "Центр модификаций"/>
+    <item id = "72" mainDescription = "Прокачка героя"/>
+    <item id = "73" mainDescription = "Усилители"/>
+    <item id = "74" mainDescription = "Информация об игре"/>
+	
+	<item id="200" mainDescription="Привет-привет! Добро пожаловать в Обучение! Взгляни-ка, кто у нас тут — это твой герой, готовый отправиться в полет вокруг всей планеты!"/>
+	<item id="201" mainDescription="Смотри, вон там в квадрате отображается уровень твоего героя! Рядом показан накопленный опыт, и там ты сможешь увидеть, сколько еще нужно опыта, чтобы перейти на следующий уровень и стать еще лучше!"/>
+	<item id="202" mainDescription="Взгляни на эти золотые монеты — это основная валюта в игре! За них ты сможешь приобрести улучшения для своего героя, чтобы облегчить путь вокруг всей планеты."/>
+	<item id="203" mainDescription="Ух ты! Видишь эти кристаллы? Это настоящие драгоценности, они настолько редкие, что за них доступны самые классные улучшения!"/>
+	<item id="204" mainDescription="Вот она, кнопка настроек! После нажатия на нее перед тобой откроется меню, где ты сможешь подстроить игру под себя: изменить звук, выбрать язык и многое другое."/>
+	<item id="205" mainDescription="Перед тобой кнопка магазина улучшений! При нажатии на нее, открывается портал в мир невероятных апгрейдов."/>
+	<item id="206" mainDescription="Эта кнопка ведет к сердцу силы твоего героя! Здесь ты можешь улучшать его базовые характеристики, например, маневренность. Прокачивай их, чтобы твой герой был готов к любым испытаниям на своем пути! "/>
+	<item id="207" mainDescription="Кнопка достижений открывает двери в зал славы твоего героя! Здесь показаны все его достижения: от впечатляющих рекордов в таблице лидеров до личных ачивок, которые он заработал в своих приключениях."/>
+	<item id="208" mainDescription="Приготовься изменить стиль! Здесь ты найдешь потрясающую коллекцию костюмов для своего героя. Выбери тот, который подчеркнет его уникальность и добавит яркости в приключения! "/>
+	<item id="209" mainDescription="Настала пора отправиться в увлекательное путешествие! Жми 'Играть', чтобы начать игру."/>
+	
+	<item id="250" mainDescription="Ты в полете! Нажимай на левую часть экрана(или W), чтобы лететь вверх, и на правую(или S), чтобы лететь вниз."/>
+	<item id="251" mainDescription="Эта шестеренка в верхнем левом углу экрана перенесет тебя в мир настроек."/>
+	<item id="252" mainDescription="Смотри, на каком уровне сейчас летит твой герой! Каждый уровень — это новые вызовы и открытия."/>
+	<item id="253" mainDescription="Здесь ты увидишь, какой путь уже пройден героем, и узнаешь величину всей дистанции, которую нужно преодолеть."/>
+	<item id="254" mainDescription="Это панель с деньгами, здесь отображается сумма, которую твой герой собрал за время полета. Монеты можно тратить на улучшение героя и покупку дополнительных усилений."/>
+	<item id="255" mainDescription="Взгляни на спидометр — у него есть минимальные и максимальные отметки, которые помогут держать необходимый темп. Если скорость опустится слишком низко, то твой герой начнет падать, старайся избежать этого!"/>
+	<item id="256" mainDescription="Это панель эффектов — здесь собраны все бонусы, которые твой герой нашел в полете! Эти эффекты бывают положительными, либо отрицательными."/>
+	<item id="258" mainDescription="Осторожно! Прямо на тебя мчится стая птиц. Твоя задача — увернуться от них. Но если сумеешь пролететь между двух птиц, тебя ожидает ценный бонус."/>
+	<item id="260" mainDescription="О нет, твоя скорость падает! На твоем пути появился большой ускоритель, который можно открыть в магазине улучшений, собери его чтобы получить дополнительный разгон."/>
+	<item id="262" mainDescription="Ура! В твоей коллекции эффектов появилось ускорение — оно добавляет временный прирост скорости. Все усилители такого типа твой герой может приобрести в магазине улучшений."/>
+	<item id="263" mainDescription="На разных уровнях высоты героя поджидают враги, и вот один уже устремился к тебе! Попробуй увернуться от него, чтобы избежать негативных эффектов!"/>
+	<item id="265" mainDescription="На начальном уровне твой герой быстро теряет скорость, не может быстро летать и уворачиваться. Чтобы исправить это прокачивай его базовые характеристики после полета."/>
+	<item id="266" mainDescription="На развитие персонажа нужны монеты, много монет! Собирай монеты на своем пути, они как раз перед тобой."/>
+	<item id="268" mainDescription="Поздравляю, базовый курс героя пройден. Все эти знания помогут тебе совершить облет вокруг планеты. Теперь можешь отправляться в свободный полет!"/>
+  </UI_Localization>
+	<WorldObjects_Localization>
+		<Items_Localization>
+		  <item id = "1" mainDescription = "РУСС 
+				or another things" secondaryDescription = "ЭТО РУСС"/>
+		  <item id = "2" mainDescription = "This is main description about item 
+				or another things" secondaryDescription = "Secondary description isn't nesesery"/>
+		  <item id = "4" mainDescription = "This is maincription about item 
+				or another things" secondaryDescription = "Seconion isn't nesesery"/>
+		</Items_Localization>
+		<Achivments_Localization>
+				<item id="1" mainDescription="Курс молодого героя" secondaryDescription="Пройти обучение"/>
+				<item id="2" mainDescription="Властелин облаков" secondaryDescription="Долететь до облаков"/>
+				<item id="3" mainDescription="Космодесант" secondaryDescription="Долететь до космоса"/>
+				<item id="4" mainDescription="Вне пространства" secondaryDescription="Улететь за пределы космоса"/>
+				<item id="5" mainDescription="Реактивная тяга" secondaryDescription="Купить джетпак"/>
+				<item id="6" mainDescription="Мастер притяжения" secondaryDescription="Купить магнит"/>
+				<item id="7" mainDescription="Непробиваемая стена" secondaryDescription="Купить щит"/>
+				<item id="8" mainDescription="Турбо-гонщик" secondaryDescription="Купить ускоритель"/>
+				<item id="9" mainDescription="Абсолютная тяга" secondaryDescription="Максимально прокачать джетпак"/>
+				<item id="10" mainDescription="Магнитный властелин " secondaryDescription="Максимально прокачать магнит"/>
+				<item id="11" mainDescription="Стена бессмертия " secondaryDescription="Максимально прокачать щит"/>
+				<item id="12" mainDescription="Турбо-форсаж " secondaryDescription="Максимально прокачать ускоритель"/>
+				<item id="13" mainDescription="Находка века" secondaryDescription="Найти кристал"/>
+				<item id="14" mainDescription="Золотая сотня" secondaryDescription="Накопить 100 монет"/>
+				<item id="15" mainDescription="Мастер накоплений" secondaryDescription="Накопить 1000 монет"/>
+				<item id="16" mainDescription="Кошелек миллионера" secondaryDescription="Накопить 20000 монет"/>
+				<item id="17" mainDescription="Несокрушимая скорость " secondaryDescription="Прокачать потерю скорости до максимума"/>
+				<item id="18" mainDescription="Ловкач" secondaryDescription="Прокачать маневренность до максимума"/>
+				<item id="19" mainDescription="Сквозь время" secondaryDescription="Прокачать скорость до максимума"/>
+				<item id="20" mainDescription="Властелин эффектов" secondaryDescription="Собрать все положительные эффекты"/>
+				<item id="21" mainDescription="Начало великого пути" secondaryDescription="Пролететь 1 тысячу км"/>
+				<item id="22" mainDescription="Авантюрист" secondaryDescription="Пролететь 5 тысяч км"/>
+				<item id="23" mainDescription="Легенда дальних дорог" secondaryDescription="Пролететь 20 тысяч км"/>
+				<item id="24" mainDescription="Абсолютный чемпион" secondaryDescription="Пролететь вокруг земли"/>
+		</Achivments_Localization>
+		<Skins_Localization>
+				<item id = "1" mainDescription = "Космотурист" secondaryDescription = "Самый стандартный обитатель и покоритель земли."/>
+				<item id = "2" mainDescription = "НЛО спортикус" secondaryDescription = "Еще никогда НЛО не было так заряжено мотивацией по покорению новой планеты, как сейчас!"/>
+				<item id = "3" mainDescription = "Картопыч" secondaryDescription = "Давным давно, в далекой далекой галактике был запущен в космос первый картопыч из цивилизации картопычей. С тех времен он бороздит бесконечность!"/>
+		</Skins_Localization>
+	</WorldObjects_Localization>
+	<Upgrades_Localization>
+		<Upgrade_Items_Localization>
+		  <Game_Items_Update_Localization>
+			<item id = "1" mainDescription = "РУСС 1" secondaryDescription = "Ру item1"/>
+			<item id = "2" mainDescription = "РУСС 2" secondaryDescription = "русс item2"/>
+			<item id = "3" mainDescription = "Update3" secondaryDescription = "Second3"/>
+			<item id = "4" mainDescription = "Update4" secondaryDescription = "Second3"/>
+			<item id = "5" mainDescription = "Update5" secondaryDescription = "Second3"/>
+			<item id = "6" mainDescription = "Update6" secondaryDescription = "Second3"/>
+		  </Game_Items_Update_Localization>
+		  <Boost_Items_Localization>
+			<item id = "1" mainDescription = "Маневренность" secondaryDescription = "+ ловкость обхода препятствий"/>
+			<item id = "2" mainDescription = "Поддержание скорости" secondaryDescription = "+ замедление потери скорости"/>
+			<item id = "3" mainDescription = "Макс. скорость" secondaryDescription = "+25 к максимальной скорости"/>
+		  </Boost_Items_Localization>
+		 <Upgrade_Boost_Items_Localization>
+			<item id = "1" mainDescription = "Базовый щит" secondaryDescription = "Позволяет в полете найти щит. +эффект 'щит'"/>
+			<item id = "2" mainDescription = "Укрепленный щит" secondaryDescription = "Улучшенная конструкция для средней защиты"/>
+			<item id = "3" mainDescription = "Продвинутый щит" secondaryDescription = "Обеспечивает значительную защиту от ударов"/>
+			<item id = "4" mainDescription = "Галактический щит" secondaryDescription = "Долговременная защита, выдерживающая серьезные атаки"/>
+			<item id = "5" mainDescription = "МЕГА щит!" secondaryDescription = "Максимально прочный и надежный"/>
+			
+			<item id = "6" mainDescription = "Базовый джетпак" secondaryDescription = "Позволяет в полете найти джетпак. +эффект 'джетпак'"/>
+			<item id = "7" mainDescription = "Улучшенный джетпак" secondaryDescription = "Поддерживает более высокую скорость и маневренность дольше"/>
+			<item id = "8" mainDescription = "Продвинутый джетпак" secondaryDescription = "Еще дольше герой не теряет джетпак"/>
+			<item id = "9" mainDescription = "Турбомощный джетпак" secondaryDescription = "Повышенная дальность полета  на джетпаке"/>
+			<item id = "10" mainDescription = "Антигравитационный джетпак" secondaryDescription = "Обеспечивает максимальную дальность полета на джетпаке"/>
+			
+			<item id = "20" mainDescription = "Базовое ускорение" secondaryDescription = "Позволяет в полете найти эффект ускорение. +эффект 'ускорение'"/>
+			<item id = "21" mainDescription = "Повышенное ускорение" secondaryDescription = "Увеличивает скорость на несколько сек. больше"/>
+			<item id = "22" mainDescription = "Продвинутое ускорение" secondaryDescription = "Увеличивает скорость еще на пару сек."/>
+			<item id = "23" mainDescription = "Турбо-ускорение" secondaryDescription = "Дополнительно увеличивает время эффекта"/>
+			<item id = "24" mainDescription = "Сверхзвуковое ускорение" secondaryDescription = "Максимальная сила эффекта"/>
+			
+			<item id = "25" mainDescription = "Базовый магнит" secondaryDescription = "Позволяет в полете найти эффект магнит. +эффект 'магнит'"/>
+			<item id = "26" mainDescription = "Улучшенный магнит" secondaryDescription = "Магнит дольше не исчезает"/>
+			<item id = "27" mainDescription = "Продвинутый магнит" secondaryDescription = "Герой еще дольше летит с магнитом"/>
+			<item id = "28" mainDescription = "Супер магнит" secondaryDescription = "Дополнительное время с магнитом"/>
+			<item id = "29" mainDescription = "МЕГА магнит" secondaryDescription = "Максимальное время активности магнита"/>
+		  </Upgrade_Boost_Items_Localization>
+		</Upgrade_Items_Localization>
+	</Upgrades_Localization>
+</GameLocalization>

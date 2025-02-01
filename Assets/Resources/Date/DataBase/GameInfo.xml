@@ -1,0 +1,175 @@
+<GameParameters>
+  <UI>
+    <item id = "1" internalName="btnPlay"/>
+    <item id = "2" internalName="UpdateBoostBtnText"/>
+    <item id = "3" internalName="ShopBtnText"/>
+    <item id = "4" internalName="SkinShopBtnText"/>
+    <item id = "5" internalName="AchivmentsBtnText"/>
+    <item id = "6" internalName="MainMenuDialogUIText"/>
+    <item id = "7" internalName="ContinueButtonText"/>
+    <item id = "8" internalName="EqipmentSkinText"/>
+    <item id = "9" internalName="SelectSkinText"/>
+    <item id = "10" internalName="BuySkinText"/>
+    <item id = "11" internalName="AgreeExitUIText"/>
+    <item id = "12" internalName="PauseText"/>
+    <item id = "13" internalName="ContinueBtnText"/>
+    <item id = "14" internalName="ExitMainMenuBtnText"/>
+    <item id = "15" internalName="SpeedNamePlayerText"/>
+    <item id = "16" internalName="LowNotifyPlayerText"/>
+    <item id = "17" internalName="HighNotifyPlayerText"/>
+    <item id = "18" internalName="AchivementsUINameText"/>
+    <item id = "19" internalName="BuyBtnText"/>
+    <item id = "20" internalName="EffectNowText"/>
+	
+    <item id = "21" internalName="FAQButtonText"/>
+    <item id = "22" internalName="FAQEffectTitleInPage"/>
+    <item id = "23" internalName="FAQEffectInfoInPage"/>
+    <item id = "24" internalName="FAQEffectJetpackInfoInPage"/>
+    <item id = "25" internalName="FAQEffectMagnetInfoInPage"/>
+    <item id = "26" internalName="FAQEffectShieldInfoInPage"/>
+    <item id = "27" internalName="FAQEffectSpeedBoostInfoInPage"/>
+    <item id = "28" internalName="FAQEffectSpeedDebuffInfoInPage"/>
+    <item id = "29" internalName="StartTutorialBtn"/>
+    <item id = "30" internalName="FAQEffectMobilityDebuffInfoInPage"/>
+    <item id = "31" internalName="TutorialName"/>
+    <item id = "32" internalName="ResetSavesText"/>
+    <item id = "33" internalName="AgreeResetUITextTMP"/>
+	<item id = "34" internalName="GameOverTitle"/>
+	<item id = "35" internalName="DistanceNowTitle"/>
+	<item id = "36" internalName="LastRecordTitle"/>
+	<item id = "37" internalName="GameOverInfo_PlayerCanFlyInCloud"/>
+    
+    <item id = "50" internalName="Earth"/>
+    <item id = "51" internalName="Clouds"/>
+    <item id = "52" internalName="Space"/>
+	
+    <item id = "70" internalName = "ShopMarket"/>
+    <item id = "71" internalName = "UpgradeItemMarket"/>
+    <item id = "72" internalName = "BoostPlayerItemsMarket"/>
+    <item id = "73" internalName = "UpdateBoostItemsMarket"/>
+    <item id = "74" internalName = "FAQTitle"/>
+	
+	<item id="200" internalName="Tutorial_0"/>
+	<item id="201" internalName="Tutorial_1"/>
+	<item id="202" internalName="Tutorial_2"/>
+	<item id="203" internalName="Tutorial_3"/>
+	<item id="204" internalName="Tutorial_4"/>
+	<item id="205" internalName="Tutorial_5"/>
+	<item id="206" internalName="Tutorial_6"/>
+	<item id="207" internalName="Tutorial_7"/>
+	<item id="208" internalName="Tutorial_8"/>
+	<item id="209" internalName="Tutorial_9"/>
+	
+	<item id="250" internalName="Tutorial_50"/>
+	<item id="251" internalName="Tutorial_51"/>
+	<item id="252" internalName="Tutorial_52"/>
+	<item id="253" internalName="Tutorial_53"/>
+	<item id="254" internalName="Tutorial_54"/>
+	<item id="255" internalName="Tutorial_55"/>
+	<item id="256" internalName="Tutorial_56"/>
+	<item id="258" internalName="Tutorial_58"/>
+	<item id="260" internalName="Tutorial_60"/>
+	<item id="262" internalName="Tutorial_62"/>
+	<item id="263" internalName="Tutorial_63"/>
+	<item id="265" internalName="Tutorial_65"/>
+	<item id="266" internalName="Tutorial_66"/>
+	<item id="268" internalName="Tutorial_68"/>
+	
+  </UI>
+	<WorldObjects>
+		<Items>
+			<item id = "1" price = "2"/>
+			<item id = "2" price = "3"/>
+			<item id = "4" price = "4"/>
+			<item id = "3" price = "6"/>
+		</Items>
+		<Skins>
+			<skin id = "1" lvlToUnlock = "1" price = "0" priceSpecialMoney = "0" pathToSkin = "Prefabs/MainGame/Player/PlayerSkins/Pilot" iconPath="Sprites/Hub/ShieldUpdate1"/>
+			<skin id = "2" lvlToUnlock = "5" price = "1111" priceSpecialMoney = "1" pathToSkin = "Prefabs/MainGame/Player/PlayerSkins/Pilot_NLO"  iconPath="Sprites/Hub/ShieldUpdate1"/>
+			<skin id = "3" lvlToUnlock = "10" price = "10000" priceSpecialMoney = "100" pathToSkin = "Prefabs/MainGame/Player/PlayerSkins/Pilot_Potato"  iconPath="Sprites/Hub/ShieldUpdate1"/>
+		</Skins>
+		<Achivments>
+			<achivment id = "1" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "2" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "3" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "4" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "5" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "6" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "7" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "8" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "9" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "10" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "11" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "12" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "13" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "14" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "15" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "16" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "17" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "18" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "19" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "20" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "21" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "22" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "23" iconPath="Sprites/Hub/AchievementIcon"/>
+			<achivment id = "24" iconPath="Sprites/Hub/AchievementIcon"/>
+		</Achivments>
+	</WorldObjects>
+	<Upgrades>
+		<Upgrade_Items>
+			<New_Items>
+				<UpgradeNew_Items>
+					<updateObject id = "1" lvlToUnlock = "1" price = "100" priceSpecialMoney = "0" timeToSearch = "10" />
+					<updateObject id = "2" lvlToUnlock = "2" price = "200" priceSpecialMoney = "20" timeToSearch = "5" />
+					<updateObject id = "6" lvlToUnlock = "3" price = "400" priceSpecialMoney = "30" timeToSearch = "8" />
+					<updateObject id = "3" lvlToUnlock = "4" price = "500" priceSpecialMoney = "40" timeToSearch = "99" />
+					<updateObject id = "4" lvlToUnlock = "5" price = "600" priceSpecialMoney = "50" timeToSearch = "88" />
+					<updateObject id = "5" lvlToUnlock = "6" price = "700" priceSpecialMoney = "60" timeToSearch = "879" />
+				</UpgradeNew_Items>
+				<UpgradeNewAssignment_Items>
+					<newAssignment_Item id = "1" idUpgrade = "1" idNew = "1"/>
+					<newAssignment_Item id = "2" idUpgrade = "1" idNew = "2"/>
+					<newAssignment_Item id = "3" idUpgrade = "2" idNew = "4"/>
+				</UpgradeNewAssignment_Items>
+			</New_Items>
+			<Boost_Items>
+				<UpgradeBoost_Items>
+					<updateBoostItem id = "1" internalName = "shield" lvlToUnlock = "4" idNeedUpgradeForOpen = "0" price = "150" priceSpecialMoney = "0" countEffect = "0" timeEffectSecond = "0" iconPath="Sprites/Hub/Shield" />
+					<updateBoostItem id = "2" internalName = "shield" lvlToUnlock = "8" idNeedUpgradeForOpen = "1" price = "600" priceSpecialMoney = "0" countEffect = "2" timeEffectSecond = "0" iconPath="Sprites/Hub/Shield"/>
+					<updateBoostItem id = "3" internalName = "shield" lvlToUnlock = "12" idNeedUpgradeForOpen = "2" price = "2300" priceSpecialMoney = "10" countEffect = "2" timeEffectSecond = "0" iconPath="Sprites/Hub/Shield"/>
+					<updateBoostItem id = "4" internalName = "shield" lvlToUnlock = "15" idNeedUpgradeForOpen = "3" price = "5000" priceSpecialMoney = "30" countEffect = "2" timeEffectSecond = "0" iconPath="Sprites/Hub/Shield"/>
+					<updateBoostItem id = "5" internalName = "shield" lvlToUnlock = "18" idNeedUpgradeForOpen = "4" price = "10000" priceSpecialMoney = "80" countEffect = "2" timeEffectSecond = "0" iconPath="Sprites/Hub/Shield"/>
+					
+					<updateBoostItem id = "6" internalName = "jetpack" lvlToUnlock = "5" idNeedUpgradeForOpen = "0" price = "200" priceSpecialMoney = "0" countEffect = "0" timeEffectSecond = "0" iconPath="Sprites/Hub/Jetpack"/>
+					<updateBoostItem id = "7" internalName = "jetpack" lvlToUnlock = "8" idNeedUpgradeForOpen = "6" price = "600" priceSpecialMoney = "0" countEffect = "0" timeEffectSecond = "3" iconPath="Sprites/Hub/Jetpack"/>
+					<updateBoostItem id = "8" internalName = "jetpack" lvlToUnlock = "10" idNeedUpgradeForOpen = "7" price = "1500" priceSpecialMoney = "0" countEffect = "0" timeEffectSecond = "3" iconPath="Sprites/Hub/Jetpack"/>
+					<updateBoostItem id = "9" internalName = "jetpack" lvlToUnlock = "12" idNeedUpgradeForOpen = "8" price = "3000" priceSpecialMoney = "10" countEffect = "0" timeEffectSecond = "3" iconPath="Sprites/Hub/Jetpack"/>
+					<updateBoostItem id = "10" internalName = "jetpack" lvlToUnlock = "14" idNeedUpgradeForOpen = "9" price = "5000" priceSpecialMoney = "30" countEffect = "0" timeEffectSecond = "3" iconPath="Sprites/Hub/Jetpack"/>
+					
+					<updateBoostItem id = "20" internalName = "speedBoost" lvlToUnlock = "1" idNeedUpgradeForOpen = "0" price = "40" priceSpecialMoney = "0" countEffect = "0" timeEffectSecond = "0" iconPath="Sprites/MainGame/UI/Speed"/>
+					<updateBoostItem id = "21" internalName = "speedBoost" lvlToUnlock = "3" idNeedUpgradeForOpen = "20" price = "200" priceSpecialMoney = "0" countEffect = "0" timeEffectSecond = "2" iconPath="Sprites/MainGame/UI/Speed"/>
+					<updateBoostItem id = "22" internalName = "speedBoost" lvlToUnlock = "6" idNeedUpgradeForOpen = "21" price = "500" priceSpecialMoney = "0" countEffect = "0" timeEffectSecond = "2" iconPath="Sprites/MainGame/UI/Speed"/>
+					<updateBoostItem id = "23" internalName = "speedBoost" lvlToUnlock = "9" idNeedUpgradeForOpen = "22" price = "1000" priceSpecialMoney = "5" countEffect = "0" timeEffectSecond = "2" iconPath="Sprites/MainGame/UI/Speed"/>
+					<updateBoostItem id = "24" internalName = "speedBoost" lvlToUnlock = "12" idNeedUpgradeForOpen = "23" price = "2500" priceSpecialMoney = "20" countEffect = "0" timeEffectSecond = "2" iconPath="Sprites/MainGame/UI/Speed"/>
+				
+					<updateBoostItem id = "25" internalName = "magnet" lvlToUnlock = "7" idNeedUpgradeForOpen = "0" price = "2000" priceSpecialMoney = "0" countEffect = "0" timeEffectSecond = "0" iconPath="Sprites/Hub/Magnet"/>
+					<updateBoostItem id = "26" internalName = "magnet" lvlToUnlock = "9" idNeedUpgradeForOpen = "25" price = "4500" priceSpecialMoney = "0" countEffect = "0" timeEffectSecond = "2" iconPath="Sprites/Hub/Magnet"/>
+					<updateBoostItem id = "27" internalName = "magnet" lvlToUnlock = "13" idNeedUpgradeForOpen = "26" price = "9000" priceSpecialMoney = "10" countEffect = "0" timeEffectSecond = "2" iconPath="Sprites/Hub/Magnet"/>
+					<updateBoostItem id = "28" internalName = "magnet" lvlToUnlock = "16" idNeedUpgradeForOpen = "27" price = "13000" priceSpecialMoney = "40" countEffect = "0" timeEffectSecond = "2" iconPath="Sprites/Hub/Magnet"/>
+					<updateBoostItem id = "29" internalName = "magnet" lvlToUnlock = "18" idNeedUpgradeForOpen = "28" price = "20000" priceSpecialMoney = "100" countEffect = "0" timeEffectSecond = "2" iconPath="Sprites/Hub/Magnet"/>
+					
+				</UpgradeBoost_Items>
+				<Counter_Boost_Player>
+					<boostUserItem id = "1" internalName = "playerMobitity" basePrice = "40" multiplyStepPriceByCount = "1.8" baseEffectCount = "1" maxBuyCount = "14"  iconPath="Sprites/Hub/PlayerBoost"/>
+					<!--Эффект делится на 1000-->
+					<boostUserItem id = "2" internalName = "playerDebuffSpeed" basePrice = "30" multiplyStepPriceByCount = "1.6" baseEffectCount = "25" maxBuyCount = "20"  iconPath="Sprites/Hub/PlayerBoost"/>
+					<boostUserItem id = "3" internalName = "playerMaxSpeed" basePrice = "30" multiplyStepPriceByCount = "1.4" baseEffectCount = "25" maxBuyCount = "20"  iconPath="Sprites/Hub/MainGame/UI/Speed"/>
+				</Counter_Boost_Player>
+				<UpgradeBoostAssignment_Items>
+					<boostAssignment_Item id = "1" idUpgrade = "1" idBoost_Item = "1" percentBoost = "20"/>
+					<boostAssignment_Item id = "2" idUpgrade = "1" idBoost_Item = "2" percentBoost = "20"/>
+				</UpgradeBoostAssignment_Items>
+			</Boost_Items>
+		</Upgrade_Items>
+	</Upgrades>
+</GameParameters>

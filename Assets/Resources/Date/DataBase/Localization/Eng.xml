@@ -1,0 +1,161 @@
+<GameLocalization>
+  <UI_Localization>
+	<item id="1" mainDescription="Play"/>
+	<item id="2" mainDescription="Boosts"/>
+	<item id="3" mainDescription="Upgrades"/>
+	<item id="4" mainDescription="Skins"/>
+	<item id="5" mainDescription="Achievements"/>
+	<item id="6" mainDescription="Menu"/>
+	<item id="7" mainDescription="Continue"/>
+	<item id="8" mainDescription="Selected"/>
+	<item id="9" mainDescription="Select"/>
+	<item id="10" mainDescription="Buy"/>
+	<item id="11" mainDescription="Are you sure you want to end the flight?"/>
+	<item id="12" mainDescription="Pause"/>
+	<item id="13" mainDescription="Continue"/>
+	<item id="14" mainDescription="Main Menu"/>
+	<item id="15" mainDescription="km/h"/>
+	<item id="16" mainDescription="Too low!"/>
+	<item id="17" mainDescription="Too high!"/>
+	<item id="18" mainDescription="Achievements"/>
+	<item id="19" mainDescription="Buy"/>
+	<item id="20" mainDescription="Effect now:"/>
+	
+	<item id="21" mainDescription="FAQ"/>
+	<item id="22" mainDescription="About Effects"/>
+	<item id="23" mainDescription="There are 2 types of effects — negative and positive. Negative effects are imposed on the hero by various creatures and hinder his flight. Positive effects help the hero in flight."/>
+	<item id="24" mainDescription="The positive effect 'Jetpack' gives the hero maneuverability and speed boost."/>
+	<item id="25" mainDescription="The positive effect 'Magnet' attracts all positive effects and coins to the hero."/>
+	<item id="26" mainDescription="The positive effect 'Shield' provides the hero with protection from negative effects."/>
+	<item id="27" mainDescription="The positive effect 'Booster' gives the hero a speed boost."/>
+	<item id="28" mainDescription="The negative effect 'Snail' reduces the hero's speed."/>
+	<item id="29" mainDescription="Restart Tutorial"/>
+	<item id="30" mainDescription="The negative effect 'Dizziness' reduces the hero's maneuverability."/>
+	<item id="31" mainDescription="Tutorial"/>
+	<item id="32" mainDescription="Reset Saves"/>
+	<item id="33" mainDescription="All data will be reset, records on the leaderboard will be recorded from the beginning, a new game will start. Do you want to continue anyway?"/>
+	<item id="34" mainDescription="Game Over"/>
+    <item id="35" mainDescription="Distance:"/>
+    <item id="36" mainDescription="Record:"/>
+    <item id="37" mainDescription="In the next flight, try to soar high up; a new level awaits you there!"/>
+    
+    <item id = "50" mainDescription = "Earth"/>
+    <item id = "51" mainDescription = "Clouds"/>
+    <item id = "52" mainDescription = "Space"/>
+	
+	<item id="70" mainDescription="Shop"/>
+	<item id="71" mainDescription="Modification Center"/>
+	<item id="72" mainDescription="Hero Enhancement"/>
+	<item id="73" mainDescription="Boosters"/>
+	<item id="74" mainDescription="Main information"/>
+	
+	<item id="200" mainDescription="Hello there! Welcome to the Tutorial! Look who we've got here — it's your hero, ready to fly around the entire planet!"/>
+	<item id="201" mainDescription="See that square over there? It shows your hero's level! Next to it, you can see the accumulated experience and how much you need to reach the next level and become even better!"/>
+	<item id="202" mainDescription="Check out these gold coins — they are the main currency in the game! You can use them to buy upgrades for your hero, making the journey around the planet easier."/>
+	<item id="203" mainDescription="Wow! Do you see these crystals? They're real treasures, so rare that they unlock the coolest upgrades!"/>
+	<item id="204" mainDescription="Here's the settings button! Click it to open the menu where you can customize the game to your liking: adjust sound, select a language, and more."/>
+	<item id="205" mainDescription="In front of you is the upgrade shop button! Clicking it opens a portal to a world of incredible upgrades."/>
+	<item id="206" mainDescription="This button leads to the core of your hero's power! Here you can enhance his basic attributes, like maneuverability. Level them up to prepare your hero for any challenges ahead!"/>
+	<item id="207" mainDescription="The achievements button opens the doors to your hero's hall of fame! Here you can see all his accomplishments: from impressive leaderboard records to personal achievements earned during adventures."/>
+	<item id="208" mainDescription="Get ready to change your style! Here you will find an amazing collection of costumes for your hero. Choose one that highlights his uniqueness and adds flair to his adventures!"/>
+	<item id="209" mainDescription="It's time to embark on an exciting journey! Press 'Play' to start the game."/>
+	
+	<item id="250" mainDescription="You're in flight! Tap the left side of the screen (or press W) to fly up, and the right side (or press S) to fly down."/>
+	<item id="251" mainDescription="This gear icon in the upper left corner of the screen will take you to the world of settings."/>
+	<item id="252" mainDescription="See the level your hero is flying at now! Each level offers new challenges and discoveries."/>
+	<item id="253" mainDescription="Here you'll see the distance your hero has already covered and find out the total distance you need to overcome."/>
+	<item id="254" mainDescription="This is the money panel, displaying the amount your hero has collected during the flight. Coins can be spent on upgrading the hero and buying additional boosts."/>
+	<item id="255" mainDescription="Look at the speedometer — it has minimum and maximum marks to help maintain the necessary pace. If the speed drops too low, your hero will start to fall, try to avoid this!"/>
+	<item id="256" mainDescription="This is the effects panel — here are all the bonuses your hero found during the flight! These effects can be positive or negative."/>
+	<item id="258" mainDescription="Watch out! A flock of birds is rushing straight at you. Your task is to dodge them. But if you manage to fly between two birds, you'll get a valuable bonus."/>
+	<item id="260" mainDescription="Oh no, your speed is dropping! A big booster has appeared on your path, which can be unlocked in the upgrade shop, collect it to get an additional boost."/>
+	<item id="262" mainDescription="Hooray! Your collection of effects now includes acceleration — it provides a temporary speed increase. Your hero can get all such boosters in the upgrade shop."/>
+	<item id="263" mainDescription="At different altitudes, enemies await your hero, and one is already heading towards you! Try to dodge it to avoid negative effects!"/>
+	<item id="265" mainDescription="At the initial level, your hero quickly loses speed and can't fly fast or dodge well. To fix this, upgrade his basic attributes after the flight."/>
+	<item id="266" mainDescription="Developing your character requires coins, lots of coins! Collect coins on your path, they are right in front of you."/>
+	<item id="268" mainDescription="Congratulations, you have completed the basic hero course. All this knowledge will help you fly around the planet. Now you can embark on a free flight!"/>
+  </UI_Localization>
+	<WorldObjects_Localization>
+		<Items_Localization>
+			<item id = "1" mainDescription = "This is main description about item 
+			or another things" secondaryDescription = "Secondary description isn't nesesery"/>
+			<item id = "2" mainDescription = "This is main description about item 
+			or another things" secondaryDescription = "Secondary description isn't nesesery"/>
+	  <item id = "4" mainDescription = "This is maincription about item 
+			or another things" secondaryDescription = "Seconion isn't nesesery"/>
+		</Items_Localization>
+		<Achivments_Localization>
+			<item id="1" mainDescription="Hero's Initiation" secondaryDescription="Complete the tutorial"/>
+			<item id="2" mainDescription="Lord of the Clouds" secondaryDescription="Fly to the clouds"/>
+			<item id="3" mainDescription="Space Marine" secondaryDescription="Reach space"/>
+			<item id="4" mainDescription="Beyond Space" secondaryDescription="Fly beyond space"/>
+			<item id="5" mainDescription="Jet Thrust" secondaryDescription="Buy a jetpack"/>
+			<item id="6" mainDescription="Master of Attraction" secondaryDescription="Buy a magnet"/>
+			<item id="7" mainDescription="Impenetrable Wall" secondaryDescription="Buy a shield"/>
+			<item id="8" mainDescription="Turbo Racer" secondaryDescription="Buy a booster"/>
+			<item id="9" mainDescription="Absolute Thrust" secondaryDescription="Max out the jetpack"/>
+			<item id="10" mainDescription="Magnetic Overlord" secondaryDescription="Max out the magnet"/>
+			<item id="11" mainDescription="Wall of Immortality" secondaryDescription="Max out the shield"/>
+			<item id="12" mainDescription="Turbo Boost" secondaryDescription="Max out the booster"/>
+			<item id="13" mainDescription="Find of the Century" secondaryDescription="Find a crystal"/>
+			<item id="14" mainDescription="Golden Hundred" secondaryDescription="Accumulate 100 coins"/>
+			<item id="15" mainDescription="Master Saver" secondaryDescription="Accumulate 1000 coins"/>
+			<item id="16" mainDescription="Millionaire's Wallet" secondaryDescription="Accumulate 20000 coins"/>
+			<item id="17" mainDescription="Unyielding Speed" secondaryDescription="Max out speed loss reduction"/>
+			<item id="18" mainDescription="Agile" secondaryDescription="Max out maneuverability"/>
+			<item id="19" mainDescription="Through Time" secondaryDescription="Max out speed"/>
+			<item id="20" mainDescription="Effect Master" secondaryDescription="Collect all positive effects"/>
+			<item id="21" mainDescription="Great Journey's Beginning" secondaryDescription="Fly 1,000 km"/>
+			<item id="22" mainDescription="Adventurer" secondaryDescription="Fly 5,000 km"/>
+			<item id="23" mainDescription="Legend of Long Roads" secondaryDescription="Fly 20,000 km"/>
+			<item id="24" mainDescription="Ultimate Champion" secondaryDescription="Fly around the Earth"/>
+		</Achivments_Localization>
+		<Skins_Localization>
+				<item id="1" mainDescription="Cosmotourist" secondaryDescription="The most standard inhabitant and conqueror of Earth."/>
+				<item id="2" mainDescription="UFO Sporticus" secondaryDescription="Never before has a UFO been so charged with motivation to conquer a new planet as it is now!"/>
+				<item id="3" mainDescription="Kartopych" secondaryDescription="Long ago, in a galaxy far, far away, the first Kartopych from the Kartopych civilization was launched into space. Since then, it has been exploring infinity!"/>
+		</Skins_Localization>
+	</WorldObjects_Localization>
+	<Upgrades_Localization>
+		<Upgrade_Items_Localization>
+			<Game_Items_Update_Localization>
+				<item id = "1" mainDescription = "Update for item 1" secondaryDescription = "Second info item1"/>
+				<item id = "2" mainDescription = "Update for item 2" secondaryDescription = "Second info item2"/>
+				<item id = "3" mainDescription = "Update3" secondaryDescription = "Second3"/>
+				<item id = "4" mainDescription = "Update4" secondaryDescription = "Second3"/>
+				<item id = "5" mainDescription = "Update5" secondaryDescription = "Second3"/>
+				<item id = "6" mainDescription = "Update6" secondaryDescription = "Second3"/>
+			</Game_Items_Update_Localization>
+			<Boost_Items_Localization>	
+				<item id="1" mainDescription="Maneuverability" secondaryDescription="+ agility for avoiding obstacles"/>
+				<item id="2" mainDescription="Speed Maintenance" secondaryDescription="+ reduced speed loss"/>
+				<item id="3" mainDescription="Max Speed" secondaryDescription="+25 to maximum speed"/>
+			</Boost_Items_Localization>	
+			<Upgrade_Boost_Items_Localization>
+				<item id="1" mainDescription="Basic Shield" secondaryDescription="Allows you to find a shield in flight. +effect 'shield'"/>
+				<item id="2" mainDescription="Reinforced Shield" secondaryDescription="Enhanced construction for medium protection"/>
+				<item id="3" mainDescription="Advanced Shield" secondaryDescription="Provides significant protection against hits"/>
+				<item id="4" mainDescription="Galactic Shield" secondaryDescription="Long-lasting protection that withstands serious attacks"/>
+				<item id="5" mainDescription="MEGA Shield!" secondaryDescription="Maximum strength and reliability"/>
+				
+				<item id="6" mainDescription="Basic Jetpack" secondaryDescription="Allows you to find a jetpack in flight. +effect 'jetpack'"/>
+				<item id="7" mainDescription="Enhanced Jetpack" secondaryDescription="Maintains higher speed and maneuverability longer"/>
+				<item id="8" mainDescription="Advanced Jetpack" secondaryDescription="Keeps the jetpack for even longer"/>
+				<item id="9" mainDescription="Turbo-powered Jetpack" secondaryDescription="Increased flight range with the jetpack"/>
+				<item id="10" mainDescription="Antigravity Jetpack" secondaryDescription="Provides maximum flight range with the jetpack"/>
+				
+				<item id="20" mainDescription="Basic Boost" secondaryDescription="Allows you to find the acceleration effect in flight. +effect 'boost'"/>
+				<item id="21" mainDescription="Increased Boost" secondaryDescription="Increases speed for a few more seconds"/>
+				<item id="22" mainDescription="Advanced Boost" secondaryDescription="Extends speed for a couple more seconds"/>
+				<item id="23" mainDescription="Turbo Boost" secondaryDescription="Further extends the effect duration"/>
+				<item id="24" mainDescription="Supersonic Boost" secondaryDescription="Maximum effect strength"/>
+				
+				<item id="25" mainDescription="Basic Magnet" secondaryDescription="Allows you to find the magnet effect in flight. +effect 'magnet'"/>
+				<item id="26" mainDescription="Enhanced Magnet" secondaryDescription="The magnet lasts longer"/>
+				<item id="27" mainDescription="Advanced Magnet" secondaryDescription="The hero flies even longer with the magnet"/>
+				<item id="28" mainDescription="Super Magnet" secondaryDescription="Additional time with the magnet"/>
+				<item id="29" mainDescription="MEGA Magnet" secondaryDescription="Maximum magnet activity time"/>
+			</Upgrade_Boost_Items_Localization>
+		</Upgrade_Items_Localization>
+	</Upgrades_Localization>
+</GameLocalization>

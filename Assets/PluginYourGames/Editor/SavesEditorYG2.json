@@ -1,0 +1,4 @@
+{
+    "idSave": 1808,
+    "PlayerInfoJson": "{\"PlayerInformation\":{\"PlayerFeature\":{\"MainMoney\":91,\"SpecialMoney\":0,\"Experience\":1335,\"SelectedSkinId\":1,\"PlayerDistanceRecord\":156},\"PlayerOptions\":{\"IsAd\":false,\"IsMusic\":false,\"IsFinishedTutorial\":true,\"Language\":0}},\"SaveWorldObjects\":{\"SaveItems\":{\"SaveItems\":[]},\"SaveAchievementsModel\":{\"SaveAchievements\":[{\"Id\":14},{\"Id\":7},{\"Id\":8},{\"Id\":1}]},\"SaveSkinsModel\":{\"SaveSkins\":[{\"Id\":1}]}},\"SaveUpgrades\":{\"SaveUpgradeGameItem\":[],\"SaveBoostItems\":[{\"Id\":1,\"UserCount\":1}],\"SaveUpgradeBoostItems\":[{\"Id\":1},{\"Id\":20},{\"Id\":21}]}}"
+}
