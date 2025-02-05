@@ -1,5 +1,6 @@
 using Assets.Scripts.MainGame.World;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LayerController : MonoBehaviour
@@ -16,6 +17,9 @@ public class LayerController : MonoBehaviour
     public event ActiveZoneChanged OnActiveZoneChanged;
     public delegate void ActiveZoneChanged(LayerWorldModel activeZone);
 
+    public event ActiveBiomChanged OnActiveBiomChanged;
+    public delegate void ActiveBiomChanged(BiomWorldModel activeBiom);
+
     public event ApproachedToNewActiveZone OnApproachedToNewActiveZone;
     public delegate void ApproachedToNewActiveZone(LayerWorldModel activeZone, bool isHigh);
 
@@ -26,54 +30,93 @@ public class LayerController : MonoBehaviour
     /// </summary>
     private const float ZONE_APPROACHED_Y_TO_CHANGE_LAYER = 20;
 
+    /// <summary>
+    /// Шаг в км для оповещения о изменении позоции игрока
+    /// </summary>
+    private const float STEP_BY_EVENT_CHANGE_DISTANCE = 200;
+
+    private float playerPositionY;
+    private float playerDistance;
+
+
     void Start()
     {
         foreach (var layer in Layers)
         {
             layer.IsActiveLayer = false;
+            foreach (var biom in layer.Bioms)
+            {
+                biom.IsActive = false;
+            }
         }
 
         OnActiveZoneChanged += backgroudLayerController.ActiveZoneIsChanged;
-        OnActiveZoneChanged += interactiveLayerController.ActiveZoneIsChanged;
+        OnActiveBiomChanged += backgroudLayerController.ActiveBiomIsChanged;
+        OnActiveBiomChanged += interactiveLayerController.ActiveBiomIsChanged;
         OnActiveZoneChanged += playerUIController.ActiveZoneIsChanged;
         OnApproachedToNewActiveZone += playerUIController.ApproachedToNewActiveZone;
 
         playerController.OnPlayerPositionYChange += PlayerPositionYChange;
+        playerController.OnPlayerDistanceChange += PlayerDistanceChange;
+
         PlayerPositionYChange(playerController.transform.position.y);
-
-    }
-
-    public void PlayerPositionYChange(float newPositionY)
-    {
-        foreach (var layer in Layers)
-        {
-            if (newPositionY >= layer.SizeLayerYMin && newPositionY <= layer.SizeLayerYMax)
-            {
-                if (!layer.IsActiveLayer)
-                {
-                    layer.IsActiveLayer = true;
-                    layer.BackgrounLayerInfo.CreateNewLayer = true;
-                    OnActiveZoneChanged.Invoke(layer);
-                    //Debug.Log("ActiveLayer: " + layer.LayerName + "\n maxZoneY: " + layer.SizeLayerYMax + " minZoneY: " + layer.SizeLayerYMin + "\n" + newPositionY);
-                }
-            } 
-            else if(layer.IsActiveLayer)
-            {
-                layer.BackgrounLayerInfo.CreateNewLayer = false;
-                layer.IsActiveLayer = false;
-            }
-            CheckApproachedToNewActiveZone(newPositionY, layer);
-        }
     }
 
     private void OnDestroy()
     {
         OnActiveZoneChanged -= backgroudLayerController.ActiveZoneIsChanged;
-        OnActiveZoneChanged -= interactiveLayerController.ActiveZoneIsChanged;
         OnActiveZoneChanged -= playerUIController.ActiveZoneIsChanged;
+        OnActiveBiomChanged -= backgroudLayerController.ActiveBiomIsChanged;
+        OnActiveBiomChanged -= interactiveLayerController.ActiveBiomIsChanged;
         OnApproachedToNewActiveZone -= playerUIController.ApproachedToNewActiveZone;
 
         playerController.OnPlayerPositionYChange -= PlayerPositionYChange;
+        playerController.OnPlayerDistanceChange -= PlayerDistanceChange;
+    }
+
+    private void CheckAndChangeLayers()
+    {
+        var layerInActiveZone = Layers.FirstOrDefault(x => playerPositionY >= x.SizeLayerYMin && playerPositionY <= x.SizeLayerYMax);
+        var activeLayerNow = Layers.FirstOrDefault(x => x.IsActiveLayer);
+        
+        if (!layerInActiveZone.IsActiveLayer)
+        {
+            if (activeLayerNow != null)
+            {
+                var activeBiomInLayer = activeLayerNow.Bioms.FirstOrDefault(x => x.IsActive);
+                if(activeBiomInLayer != null)
+                {
+                    activeBiomInLayer.BackgrounLayerInfo.CreateNewLayer = false;
+                    activeBiomInLayer.IsActive = false;
+                }
+                activeLayerNow.IsActiveLayer = false;
+            }
+
+            layerInActiveZone.IsActiveLayer = true;
+            OnActiveZoneChanged.Invoke(layerInActiveZone);
+            //Debug.Log("ActiveLayer: " + layerInActiveZone.LayerName + "\n maxZoneY: " + layerInActiveZone.SizeLayerYMax + " minZoneY: " + layerInActiveZone.SizeLayerYMin + "\n" + playerPositionY);
+        }
+
+        var activeLayerBiomIndex = (int)((playerDistance / layerInActiveZone.DistanceToChangeBiom) % layerInActiveZone.Bioms.Count());
+        var biomInActiveDistance = layerInActiveZone.Bioms.FirstOrDefault(x => x.BiomIndex == activeLayerBiomIndex);
+        var activeLayerBiomNow = layerInActiveZone.Bioms.FirstOrDefault(x => x.IsActive);
+        if (biomInActiveDistance != null && !biomInActiveDistance.IsActive)
+        {
+            if (activeLayerBiomNow != null)
+            {
+                activeLayerBiomNow.BackgrounLayerInfo.CreateNewLayer = false;
+                activeLayerBiomNow.IsActive = false;
+            }
+            biomInActiveDistance.BackgrounLayerInfo.CreateNewLayer = true;
+            biomInActiveDistance.IsActive = true;
+            OnActiveBiomChanged?.Invoke(biomInActiveDistance);
+            //Debug.Log("ActiveBiom: " + biomInActiveDistance.BiomName + " Index: " + activeLayerBiomIndex);
+        }
+
+        foreach (var layer in Layers)
+        {
+            CheckApproachedToNewActiveZone(playerPositionY, layer);
+        }
     }
 
     private void CheckApproachedToNewActiveZone(float newPositionY, LayerWorldModel layer)
@@ -90,6 +133,21 @@ public class LayerController : MonoBehaviour
             {
                 OnApproachedToNewActiveZone?.Invoke(layer, false);
             }
+        }
+    }
+
+    private void PlayerPositionYChange(float newPositionY)
+    {
+        playerPositionY = newPositionY;
+        CheckAndChangeLayers();
+    }
+
+    private void PlayerDistanceChange(float newPlayerDistance)
+    {
+        playerDistance = newPlayerDistance;
+        if ((newPlayerDistance % STEP_BY_EVENT_CHANGE_DISTANCE) == 0)
+        {
+            CheckAndChangeLayers();
         }
     }
 }

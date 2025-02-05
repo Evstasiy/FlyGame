@@ -1,5 +1,6 @@
 using Assets.Scripts.MainGame.Models;
 using Assets.Scripts.MainGame.Player;
+using System.Collections;
 using UnityEngine;
 
 public class LayerMove : MonoBehaviour, IPauseHandler
@@ -11,6 +12,7 @@ public class LayerMove : MonoBehaviour, IPauseHandler
     public delegate void LayerCanCreate(LayerEnum layerEnum);
 
     public LayerWorldModel model;
+    public BiomWorldModel biomWorldModel;
 
     private bool isLayerCanCreate = false;
     [SerializeField]
@@ -29,7 +31,7 @@ public class LayerMove : MonoBehaviour, IPauseHandler
 
         transform.Translate(moveX, 0, 0);
 
-        if (transform.position.x < model.BackgrounLayerInfo.DestroyPositionX)
+        if (transform.position.x < biomWorldModel.BackgrounLayerInfo.DestroyPositionX)
         {
             isLayerCanCreate = false;
             OnLayerInEndPositionX?.Invoke();
@@ -44,9 +46,10 @@ public class LayerMove : MonoBehaviour, IPauseHandler
         }
     }
 
-    public void SetLayerModel(LayerWorldModel model)
+    public void SetLayerAndBiomModel(LayerWorldModel model, BiomWorldModel biomWorldModel)
     {
         this.model = model;
+        this.biomWorldModel = biomWorldModel;
     }
 
     public void SetPause(bool isPause)
@@ -54,8 +57,14 @@ public class LayerMove : MonoBehaviour, IPauseHandler
         //this.isPause = isPause;
     }
 
+    public void DisabledNow()
+    {
+        Animation?.Play("LayerSwipe");
+    }
+
     private void OnEnable()
     {
-        Animation?.Play();
+        Animation?.Play("LayerGoForward");
     }
+
 }

@@ -1,4 +1,5 @@
 using Assets.Scripts.MainGame.Player;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,9 +19,13 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
     private int minSpawnCount;
     private int maxSpawnCount;
 
-    public float Spacing = 6f; // Отступ между объектами
+    public bool IsDisabledItemsNearMainObject = true;
+
+    public float MoveY = 2f; //Движение вниз
+    public float Spacing = 2f; // Отступ между объектами
     public float Amplitude = 4f; // Амплитуда синусоиды
     public float Frequency = 1f;  // Частота синусоиды
+
 
     private bool isPaused => ProjectContext.instance.PauseManager.IsPause;
 
@@ -66,8 +71,8 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
 
         currentSpeedX = Mathf.Lerp(currentSpeedX, GlobalPlayerInfo.playerInfoModel.FinalSpeed, Time.deltaTime);
         float moveX = Mathf.Clamp(currentSpeedX, InteractiveObjectModel.MinSpeed, InteractiveObjectModel.MaxSpeed);
-        
-        transform.Translate(Vector3.left * moveX * Time.deltaTime);
+
+        transform.Translate(new Vector3(-moveX, -MoveY, 0) * Time.deltaTime);
         if (transform.position.x < InteractiveObjectModel.DestroyPositionX)
         {
             Destroy(gameObject);
@@ -97,7 +102,7 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
     {
         for (int i = 0; i < objectCount; i++)
         {
-            var position = GetPositionBySpawnType(InteractiveObjectModel.SpawnType, i);
+            var position = GetPositionBySpawnType(InteractiveObjectModel.SpawnType, i, objectCount);
 
             var interactiveObject = Instantiate(InteractiveObjectForSpawn, position, Quaternion.identity, this.transform);
             interactiveObject.SetPlayerInfo(playerItemsController, playerEffectController);
@@ -116,7 +121,7 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
     {
     }
 
-    private Vector3 GetPositionBySpawnType(MassSpawnItemsTypes type, int counter)
+    private Vector3 GetPositionBySpawnType(MassSpawnItemsTypes type, int counter, int allItemsCount = 0)
     {
         float x = transform.position.x;
         float y = transform.position.y;
@@ -130,6 +135,31 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
                 x = transform.position.x + counter * Spacing;
                 y = transform.position.y + counter * Spacing;
                 break;
+            case MassSpawnItemsTypes.DoubleLine:
+                var lineSpacing = 5f;
+                x = transform.position.x + counter * Spacing;
+                y = transform.position.y + (counter % 2 == 0 ? lineSpacing : -lineSpacing);
+                break;
+            case MassSpawnItemsTypes.Roof:
+
+                float horizontalSpacing = Spacing; // Шаг по горизонтали
+                float verticalSpacing = Spacing;   // Шаг по вертикали
+
+                x = x - counter * horizontalSpacing;
+
+                int peakPoint = allItemsCount / 2;
+                if (counter < peakPoint)
+                {
+                    // До середины увеличиваем Y
+                    y = y + counter * verticalSpacing;
+                }
+                else
+                {
+                    // После середины уменьшаем Y
+                    y = y + (allItemsCount - counter) * verticalSpacing;
+                }
+
+                break;
         }
         Vector3 position = new Vector3(x, y, 0);
         return position;
@@ -137,7 +167,8 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
 
     void ObjectTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.tag == "Player" || collider.gameObject.name == "ShieldObject")
+        if((collider.gameObject.tag == "Player" || collider.gameObject.name == "ShieldObject") 
+            && IsDisabledItemsNearMainObject)
         {
             foreach (var item in activeInteractiveObjects)
             {

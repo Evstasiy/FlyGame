@@ -2,6 +2,7 @@ using Assets.Scripts.MainGame.Models;
 using Assets.Scripts.MainGame.Player;
 using Assets.Scripts.SGEngine.DataBase.DataBaseModels;
 using Assets.Scripts.SGEngine.DataBase.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,9 +30,15 @@ public class PlayerController : MonoBehaviour
     public float acceleration = 5f; // Скорость изменения скорости
     public float targetSpeed = 0f;
 
+    /// <summary>
+    /// Новая позиция игрока, оповещение по ней происходит через установленный шаг
+    /// </summary>
     public event PlayerPositionYChange OnPlayerPositionYChange;
     public delegate void PlayerPositionYChange(float newPositionY);
 
+    /// <summary>
+    /// Новая дистанция игрока, оповещение по ней происходит через установленный шаг
+    /// </summary>
     public event PlayerDistanceChange OnPlayerDistanceChange;
     public delegate void PlayerDistanceChange(float newPlayerDistance);
 
@@ -46,6 +53,9 @@ public class PlayerController : MonoBehaviour
 
     private float verticalMovement;
     private float gravityNow;
+
+    [SerializeField]
+    private bool isDebug = false;
 
     private bool isPaused => ProjectContext.instance.PauseManager.IsPause;
 
@@ -92,6 +102,12 @@ public class PlayerController : MonoBehaviour
         {
             var main = speedEffect.main;
             main.startSpeed = 0;
+            return;
+        }
+        if (isDebug)
+        {
+            GlobalPlayerInfo.playerInfoModel.AddPlayerMobility(38);
+            GlobalPlayerInfo.playerInfoModel.AddMaxPlayerSpeed(1000);
             return;
         }
         GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(GlobalPlayerInfo.playerInfoModel.GetPlayerBaseDebuffSpeed());
@@ -191,15 +207,19 @@ public class PlayerController : MonoBehaviour
         {
             targetSpeed = 0f;
         }
+
         // debug
-        /*if(Input.GetKey(KeyCode.D))
+        if (isDebug)
         {
-            GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(1);
+            if (Input.GetKey(KeyCode.D))
+            {
+                GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(10);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(-1);
+            }
         }
-        else if(Input.GetKey(KeyCode.A))
-        {
-            GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(-1);
-        }*/
 
         verticalMovement = Mathf.Lerp(verticalMovement, targetSpeed, Time.deltaTime * acceleration);
 

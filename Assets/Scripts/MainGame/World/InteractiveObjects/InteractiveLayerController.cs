@@ -15,7 +15,7 @@ namespace Assets.Scripts.MainGame.World
         public InteractiveObjectModel[] InteractiveObjectModels;
         private IEnumerable<InteractiveObjectModel> interactiveObjectModelsInLayer;
 
-        private LayerWorldModel activeLayer;
+        private BiomWorldModel activeBiom;
 
         public float spawnInterval = 0.01f;
 
@@ -40,7 +40,7 @@ namespace Assets.Scripts.MainGame.World
         /// <summary>
         /// Диапазон для спавна объектов в высоту от позиции игрока
         /// </summary>
-        private const float ZONE_Y_TARGET_SPAWN_ITEMS = 55;
+        private const float ZONE_Y_TARGET_SPAWN_ITEMS = 40;
 
         private void Start()
         {
@@ -83,20 +83,20 @@ namespace Assets.Scripts.MainGame.World
             if(canSpawnTypes != null && canSpawnTypes?.Count() > 0)
             {
                 canSpawnTypes = canSpawnTypes.Where(x => x != excludeType);
-                interactiveObjectModelsInLayer = this.activeLayer.InteractiveObjectsInZone.Where(x => canSpawnTypes.Any(y => y == x.ObjectType));
+                interactiveObjectModelsInLayer = this.activeBiom.InteractiveObjectsInZone.Where(x => canSpawnTypes.Any(y => y == x.ObjectType));
             }
         }
 
         public void SetDefaultSpawnTypesInActiveLayer()
         {
             temporaryEffectSpawnTypes = new Dictionary<EffectEnum, IEnumerable<InteractiveObjectEnum>>();
-            SetSpawnTypes(this.activeLayer.InteractiveObjectsInZone.Select(x => x.ObjectType));
+            SetSpawnTypes(this.activeBiom.InteractiveObjectsInZone.Select(x => x.ObjectType));
         }
 
-        public void ActiveZoneIsChanged(LayerWorldModel activeLayer)
+        public void ActiveBiomIsChanged(BiomWorldModel activeBiom)
         {
-            this.activeLayer = activeLayer;
-            SetSpawnTypes(this.activeLayer.InteractiveObjectsInZone.Select(x => x.ObjectType));
+            this.activeBiom = activeBiom;
+            SetSpawnTypes(this.activeBiom.InteractiveObjectsInZone.Select(x => x.ObjectType));
             if (coroutine != null)
             {
                 StopCoroutine(coroutine);
@@ -112,7 +112,7 @@ namespace Assets.Scripts.MainGame.World
             {
                 canSpawnTypes = types.Intersect(temporaryEffectSpawnTypes.SelectMany(x => x.Value));
             }
-            interactiveObjectModelsInLayer = this.activeLayer.InteractiveObjectsInZone.Where(x => canSpawnTypes.Any(y => y == x.ObjectType));
+            interactiveObjectModelsInLayer = this.activeBiom.InteractiveObjectsInZone.Where(x => canSpawnTypes.Any(y => y == x.ObjectType));
         }
 
         private IEnumerator SpawnRoutine()
@@ -178,7 +178,7 @@ namespace Assets.Scripts.MainGame.World
                 spawnZoneYMin += ProjectContext.STEP_TO_END_POS_Y;
                 spawnZoneYMax = ProjectContext.MAX_POS_Y - ProjectContext.STEP_TO_END_POS_Y;
             }
-            float posX = Random.Range(100, 200);
+            float posX = Random.Range(140, 300);
             float randomY = Random.Range(spawnZoneYMin, spawnZoneYMax);
             Vector3 randomPosition = new Vector3(posX, randomY, 0);
             return randomPosition;

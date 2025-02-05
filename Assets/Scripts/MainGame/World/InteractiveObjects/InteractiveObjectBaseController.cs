@@ -30,7 +30,10 @@ public class InteractiveObjectBaseController : MonoBehaviour, IInteractiveObject
         {
             foreach (var item in itemsNearMainObject)
             {
-                item.gameObject.SetActive(isActive);
+                if(item != null)
+                {
+                    item.gameObject.SetActive(isActive);
+                }
             }
         }
     }

@@ -8,5 +8,15 @@ public enum MassSpawnItemsTypes
     /// <summary>
     /// Линейная
     /// </summary>
-    Line
+    Line,
+
+    /// <summary>
+    /// Тунель
+    /// </summary>
+    DoubleLine,
+
+    /// <summary>
+    /// ^ Крышка
+    /// </summary>
+    Roof
 }

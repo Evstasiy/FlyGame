@@ -9,10 +9,9 @@ public class LayerWorldModel : ScriptableObject
     public LayerEnum LayerName;
     public Vector3 SpawnPosition;
     public float SpeedBraking;
-    public BackgrounLayerInfo BackgrounLayerInfo;
     public bool IsActiveLayer = false;
-    public float LayerDistanceToChange = 10;
-    public InteractiveObjectModel[] InteractiveObjectsInZone;
+    public BiomWorldModel[] Bioms;
+    public int DistanceToChangeBiom;
 
     public float SizeLayerYMax;
     public float SizeLayerYMin;

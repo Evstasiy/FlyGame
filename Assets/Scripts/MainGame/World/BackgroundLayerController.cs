@@ -7,6 +7,7 @@ public class BackgroundLayerController : MonoBehaviour
 {
     private List<LayerMove> activeLayerObjects = new List<LayerMove>();
     private LayerWorldModel actualLayerWorld;
+    private BiomWorldModel activeBiom;
 
     private int maxLayersInPlace = 3;
 
@@ -16,32 +17,46 @@ public class BackgroundLayerController : MonoBehaviour
         activeLayerObjects.Add(layerMove);
     }
 
-    public void ActiveZoneIsChanged(LayerWorldModel activeLayer)
+    public void ActiveBiomIsChanged(BiomWorldModel activeBiom)
     {
-        actualLayerWorld = activeLayer;
+        this.activeBiom = activeBiom;
 
-        var allActiveLayersTypesCount = activeLayerObjects.Where(x => x.model.LayerName == actualLayerWorld.LayerName && x.gameObject.activeSelf)?.Count() ?? 0;
+        //var allActiveOldBiomsCount = activeLayerObjects.Where(x => x.model.LayerName == actualLayerWorld.LayerName && x.gameObject.activeSelf);
+        var allActiveOldBiomsCount = activeLayerObjects.Where(x => x.gameObject.activeSelf);
+        foreach (var oldBiom in allActiveOldBiomsCount)
+        {
+            oldBiom.DisabledNow();
+        }
+
+        var allActiveLayersTypesCount = activeLayerObjects.Where(x => x.biomWorldModel.BiomName == activeBiom.BiomName && x.gameObject.activeSelf)?.Count() ?? 0;
         for (int i = allActiveLayersTypesCount; i < maxLayersInPlace; i++)
         {
-            var lastActiveLayers = activeLayerObjects.Where(x => x.model.LayerName == actualLayerWorld.LayerName);
-            float lastActiveZonePositionX = 0;
+            var lastActiveLayers = activeLayerObjects.Where(x => x.biomWorldModel.BiomName == activeBiom.BiomName && x.gameObject.activeSelf);
+            //var lastActiveLayers = activeLayerObjects.Where(x => x.model.LayerName == actualLayerWorld.LayerName);
+            float lastActiveZonePositionX = -400;
             if (lastActiveLayers?.Count() > 0)
             {
                 lastActiveZonePositionX = lastActiveLayers.Max(x => x.transform.position.x) + actualLayerWorld.SizeLayerWidth;
             }
-            var layerPos = new Vector3(lastActiveZonePositionX, activeLayer.BackgrounLayerInfo.BackgrounObject.model.SpawnPosition.y, activeLayer.BackgrounLayerInfo.BackgrounObject.model.SpawnPosition.z);
-            var layerForUse = GetObjectInPool(actualLayerWorld, layerPos);
-        }
+            var layerPos = new Vector3(lastActiveZonePositionX, actualLayerWorld.SpawnPosition.y, actualLayerWorld.SpawnPosition.z);
+            var layerForUse = GetObjectInPool(activeBiom ,layerPos);
+
+            }
     }
 
-    private LayerMove GetObjectInPool(LayerWorldModel activeLayer, Vector3? spawnPos = null)
+    public void ActiveZoneIsChanged(LayerWorldModel activeLayer)
+    {
+        actualLayerWorld = activeLayer;
+    }
+
+    private LayerMove GetObjectInPool(BiomWorldModel activeBiom, Vector3? spawnPos = null)
     {
         //Создавать объект после следующего, а не на точке спавна
-        LayerMove layerCanUse = activeLayerObjects.FirstOrDefault(x => x.model.LayerName == activeLayer.LayerName && !x.gameObject.activeSelf);
-        if (layerCanUse == null && activeLayerObjects.Where(x => x.model.LayerName == activeLayer.LayerName).Count() < maxLayersInPlace)
+        LayerMove layerCanUse = activeLayerObjects.FirstOrDefault(x => x.biomWorldModel.BiomName == activeBiom.BiomName && !x.gameObject.activeSelf);
+        if (layerCanUse == null && activeLayerObjects.Where(x => x.biomWorldModel.BiomName == activeBiom.BiomName).Count() < maxLayersInPlace)
         { 
-            layerCanUse = Instantiate(activeLayer.BackgrounLayerInfo.BackgrounObject, spawnPos ?? activeLayer.SpawnPosition, Quaternion.identity, this.transform);
-            layerCanUse.SetLayerModel(activeLayer);
+            layerCanUse = Instantiate(activeBiom.BackgrounLayerInfo.BackgrounObject, spawnPos ?? actualLayerWorld.SpawnPosition, Quaternion.identity, this.transform);
+            layerCanUse.SetLayerAndBiomModel(actualLayerWorld, activeBiom);
             activeLayerObjects.Add(layerCanUse);
             layerCanUse.OnLayerCanCreate += LayerCanCreateNew;
         } 
@@ -58,8 +73,14 @@ public class BackgroundLayerController : MonoBehaviour
 
     private void LayerCanCreateNew(LayerEnum layerEnum)
     {
-        var lastActiveZonePositionX = activeLayerObjects.Where(x=>x.model.LayerName == actualLayerWorld.LayerName).Max(x => x.transform.position.x) + actualLayerWorld.SizeLayerWidth;
-        var spawnPoint = new Vector3(lastActiveZonePositionX, actualLayerWorld.SpawnPosition.y, actualLayerWorld.SpawnPosition.z);
-        var layerForUse = GetObjectInPool(actualLayerWorld, spawnPoint);
+        float spawnPositionX = 0;
+        var activeLastBiom = activeLayerObjects.Where(x => x.biomWorldModel.BiomName == activeBiom.BiomName);
+        if (activeLastBiom.Any())
+        {
+            spawnPositionX = activeLastBiom.Max(x => x.transform.position.x) + actualLayerWorld.SizeLayerWidth;
+        }
+        //spawnPositionX = activeLayerObjects.Where(x => x.model.LayerName == actualLayerWorld.LayerName).Max(x => x.transform.position.x) + actualLayerWorld.SizeLayerWidth;
+        var spawnPoint = new Vector3(spawnPositionX, actualLayerWorld.SpawnPosition.y, actualLayerWorld.SpawnPosition.z);
+        var layerForUse = GetObjectInPool(activeBiom, spawnPoint);
     }
 }

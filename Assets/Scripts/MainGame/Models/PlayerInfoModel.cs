@@ -36,9 +36,9 @@ namespace Assets.Scripts.MainGame.Models
         /// <summary>
         /// Перемещение по Y
         /// </summary>
-        private float baseMobility = 10;
+        private float baseMobility = 16;
         /*private*/
-        public float mobility = 10;
+        public float mobility = 16;
         private float minMobility = 10;
         private float maxMobility = 38;
 
