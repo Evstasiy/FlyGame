@@ -1,11 +1,13 @@
 using Assets.Scripts.MainGame.Player;
 using Assets.Scripts.SGEngine.UserContent.AchievementFolder;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class MenuUIController : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class MenuUIController : MonoBehaviour
     private GameObject mainMenuDialogUI;
     [SerializeField]
     private Animator animatorMenuUI;
+    [SerializeField]
+    private GameObject adsMenuUI;
 
     [SerializeField]
     private Image songUI;
@@ -49,6 +53,13 @@ public class MenuUIController : MonoBehaviour
     private Image gameOverRecordNewImg;
     [SerializeField]
     private TMP_Text gameOverInfoText;
+    [SerializeField]
+    private Button gameOverRewardBtn;
+
+    [SerializeField]
+    private GameObject playerBoostRewardInput;
+
+    private List<string> rewardsIds = new List<string>();
 
     void Start()
     {
@@ -70,6 +81,19 @@ public class MenuUIController : MonoBehaviour
         AudioController.Instance.PlayClip("Click");
     }
     
+    public void SetActiveAdvMenuUI(bool isActiveUI)
+    {
+        ProjectContext.instance.PauseManager.SetPause(isActiveUI);
+        adsMenuUI.SetActive(isActiveUI);
+        //animatorMenuUI.SetBool("isPause", isActiveUI);
+        AudioController.Instance.PlayClip("Click");
+    }
+    public void ViewADSForReward(string rewardId)
+    {
+        CommertialServiceControl.SetActionOnRewardAds(RewardADSView(rewardId), rewardId);
+        CommertialServiceControl.ViewRewardADS(rewardId);
+    }
+
     public void TryExitInMainScene()
     {
         mainMenuDialogUI.SetActive(false);
@@ -92,7 +116,7 @@ public class MenuUIController : MonoBehaviour
     public void ExitInMainScene()
     {
         AudioController.Instance.PlayClip("Click");
-        if (Random.Range(1, 10) > 3 && CommertialServiceControl.IsADSReady())
+        if (CommertialServiceControl.IsADSReady())
         {
             CommertialServiceControl.SetActionOnCloseAds(() => { SceneManager.LoadScene(0); });
             CommertialServiceControl.ViewADS();
@@ -102,6 +126,7 @@ public class MenuUIController : MonoBehaviour
             SceneManager.LoadScene(0);
         }
     }
+
     private void SetSongActive(bool isActiveSong)
     {
         songUI.sprite = (isActiveSongUI) ? songOn : songOff;
@@ -188,12 +213,46 @@ public class MenuUIController : MonoBehaviour
         gameOverInfoText.gameObject.SetActive(false);
         if (!ProjectContext.instance.AchievementManager.IsAchievementUnlock(GlobalAchievements.FLY_IN_CLOUD))
         {
-            if (ProjectContext.instance.DataBaseRepository.PlayerFeaturesRepos.GetPlayerLevel() > 6 
+            if (ProjectContext.instance.DataBaseRepository.PlayerFeaturesRepos.GetPlayerLevel() > 4 
                 && Random.Range(0, 10) > 4)
             {
                 gameOverInfoText.gameObject.SetActive(true);
                 gameOverInfoText.text = ProjectContext.instance.DataBaseRepository.UITranslatorRepos.allItems["GameOverInfo_PlayerCanFlyInCloud"].Description;
             }
         }
+    }
+
+    private Action RewardADSView(string rewardID)
+    {
+        if(rewardID == ADSInfo.REWARD_ID_GameOver)
+        {
+            gameOverRewardBtn.gameObject.SetActive(false);
+            return () => 
+            {
+                GlobalPlayerInfo.playerInfoModel.AddPlayerCoins(GlobalPlayerInfo.playerInfoModel.PlayerCoins);
+                StartCoroutine(DisplayScores(new Dictionary<TMP_Text, float>()
+                {
+                    { gameOverCoinsText, GlobalPlayerInfo.playerInfoModel.PlayerCoins }
+                }));
+                Debug.Log("ShowReward!");
+            };
+        }
+        else
+        {
+            playerBoostRewardInput.SetActive(false);
+            adsMenuUI.SetActive(false);
+            ProjectContext.instance.PauseManager.SetPause(false);
+            return () =>
+            {
+                //playerEffectController.AddEffect(adsEffectBoost);
+                Debug.Log("Reward in mainGame");
+            };
+        }
+    }
+
+    private void OnDestroy()
+    {
+        gameRulesController.IsGameOver -= IsGameOver;
+        CommertialServiceControl.ClearActionsOnRewardAds();
     }
 }

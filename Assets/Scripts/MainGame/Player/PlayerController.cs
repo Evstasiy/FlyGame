@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
         if (isDebug)
         {
             GlobalPlayerInfo.playerInfoModel.AddPlayerMobility(38);
-            GlobalPlayerInfo.playerInfoModel.AddMaxPlayerSpeed(1000);
+            GlobalPlayerInfo.playerInfoModel.AddMaxPlayerSpeed(400);
             return;
         }
         GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(GlobalPlayerInfo.playerInfoModel.GetPlayerBaseDebuffSpeed());

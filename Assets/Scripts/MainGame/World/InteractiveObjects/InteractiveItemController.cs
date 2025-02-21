@@ -21,7 +21,7 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
 
     public bool IsDisabledItemsNearMainObject = true;
 
-    public float MoveY = 2f; //Движение вниз
+    public float MoveY = 0; //Движение вниз
     public float Spacing = 2f; // Отступ между объектами
     public float Amplitude = 4f; // Амплитуда синусоиды
     public float Frequency = 1f;  // Частота синусоиды
@@ -36,7 +36,6 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
         currentSpeedX = InteractiveObjectModel.MinSpeed;
         minSpawnCount = InteractiveObjectModel.MinSpawnCount;
         maxSpawnCount = InteractiveObjectModel.MaxSpawnCount;
-        Amplitude = Random.Range(1.0f, 6.0f);
         /*FIX*/
         if(InteractiveObjectModel.ObjectType == InteractiveObjectEnum.MassCoins)
         {
@@ -132,8 +131,17 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
                 y = transform.position.y + Amplitude * Mathf.Sin(Frequency * x);
                 break;
             case MassSpawnItemsTypes.Line:
+                var randomOperation = Random.Range(0, 10) >= 5 ? 1 : -1;
                 x = transform.position.x + counter * Spacing;
-                y = transform.position.y + counter * Spacing;
+                int peakPointLine = allItemsCount / 2;
+                if (counter < peakPointLine)
+                {
+                    y = transform.position.y + counter * Spacing;
+                }
+                else
+                {
+                    y = transform.position.y -counter * Spacing;
+                }
                 break;
             case MassSpawnItemsTypes.DoubleLine:
                 var lineSpacing = 5f;

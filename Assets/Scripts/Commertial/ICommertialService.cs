@@ -11,9 +11,12 @@ public interface ICommertialService
 
     #region ADS
     bool IsADSReady();
+    void ViewRewardADS(string rewardId);
     void ViewADS();
     void SetActionOnOpenAds(Action onOpenAdsMethod);
     void SetActionOnCloseAds(Action onCloseAdsMethod);
+    void SetActionOnRewardAds(Action onOpenRewardAdsMethod, string rewardId);
+    void ClearActionsOnRewardAds();
     #endregion ADS
 
     #region Metrics

@@ -28,7 +28,7 @@ public class DataBaseComponentXMLYandex : IDataBase
             var jsonPlayer = JsonUtility.ToJson(saveInformation);
             CommertialServiceControl.SavePlayerInfo(jsonPlayer);
             return true;
-        } catch (Exception ex)
+        } catch
         {
             return false;
         }
@@ -72,7 +72,7 @@ public class DataBaseComponentXMLYandex : IDataBase
             //CheckAndCreateSaveFile();
             return true;
         }
-        catch (Exception ex) {
+        catch {
             return false;
         }
     }

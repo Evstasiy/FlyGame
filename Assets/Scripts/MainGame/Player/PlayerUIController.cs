@@ -13,7 +13,6 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField]
     private Animation playerLayerWorldAnimation;
 
-
     [SerializeField]
     private TMP_Text playerSpeedText;
     [SerializeField]
@@ -43,6 +42,9 @@ public class PlayerUIController : MonoBehaviour
     private GameObject pickItemsInfoNotifyContent;
     [SerializeField]
     private PickItemInfoNotifyItemModel pickItemsInfoNotifyItem;
+
+    [SerializeField]
+    private Button advBoostButton;
 
     private bool isPaused => ProjectContext.instance.PauseManager.IsPause;
     private float maxPlayerSpeedWithUpdates => GlobalPlayerInfo.playerInfoModel.GetMaxPlayerSpeedWithUpdates();

@@ -7,7 +7,7 @@ namespace Assets.Scripts.SGEngine.DataBase.Extensions
 {
     public static class EnumExtention
     {
-        public static string? ToEnumMember<T>(this T value) where T : Enum
+        public static string ToEnumMember<T>(this T value) where T : Enum
         {
             return typeof(T)
                 .GetTypeInfo()

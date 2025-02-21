@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using YG;
 
 public class YDControl : ICommertialService
 {
-    Dictionary<string, Action> _actions = new Dictionary<string, Action>();
+    Dictionary<string, List<Action>> _actions = new Dictionary<string, List<Action>>();
     public PlayerCommertialInformation GetPlayerInformation()
     {
         var playerInfo = new PlayerCommertialInformation()
@@ -56,6 +58,17 @@ public class YDControl : ICommertialService
         return YG2.isTimerAdvCompleted;
     }
 
+    public void ViewRewardADS(string rewardId)
+    {
+        Task.Delay(1000);
+        var rewardsActionsIds = _actions.Where(x => x.Key.Contains(rewardId)).SelectMany(x=>x.Value).ToList();
+        foreach (var rewardActionId in rewardsActionsIds)
+        {
+            rewardActionId?.Invoke();
+        }
+        /**/
+    }
+
     public void ViewADS()
     {
         YG2.InterstitialAdvShow();
@@ -63,34 +76,88 @@ public class YDControl : ICommertialService
 
     public void SetActionOnOpenAds(Action onOpenAdsMethod)
     {
-        if(onOpenAdsMethod != null && !_actions.ContainsKey("openADS"))
+        if(onOpenAdsMethod != null)
         {
-            _actions.Add("openADS", onOpenAdsMethod);
+            if (_actions.ContainsKey("openADS"))
+            {
+                _actions["openADS"].Add(onOpenAdsMethod);
+            }
+            else
+            {
+
+                _actions.Add("openADS", new List<Action>(){ onOpenAdsMethod });
+            }
             YG2.onOpenAnyAdv += onOpenAdsMethod;
         }
     }
 
     public void SetActionOnCloseAds(Action onCloseAdsMethod)
     {
-        if (onCloseAdsMethod != null && !_actions.ContainsKey("closeADS"))
+        if (onCloseAdsMethod != null)
         {
-            _actions.Add("closeADS", onCloseAdsMethod);
+            if (_actions.ContainsKey("closeADS"))
+            {
+                _actions["closeADS"].Add(onCloseAdsMethod);
+            }
+            else
+            {
+
+                _actions.Add("closeADS", new List<Action>() { onCloseAdsMethod });
+            }
             YG2.onCloseAnyAdv += onCloseAdsMethod;
             YG2.onCloseAnyAdv += OnCloseAds;
         }
     }
+    public void SetActionOnRewardAds(Action onOpenRewardAdsMethod, string rewardId)
+    {
+        if (onOpenRewardAdsMethod != null)
+        {
+            if (_actions.ContainsKey(rewardId))
+            {
+                _actions[rewardId].Add(onOpenRewardAdsMethod);
+            }
+            else
+            {
+
+                _actions.Add(rewardId, new List<Action>() { onOpenRewardAdsMethod });
+            }
+            //YG2.onRewardAdv += onOpenRewardAdsMethod;
+            //YG2.onRewardAdv += OnRewardADS;// Для пропуска межстранички
+        }
+    }
     
+    public void ClearActionsOnRewardAds()
+    {
+        var rewardsActionsIds = _actions.Where(x => x.Key.Contains("rewardID_")).Select(x=>x.Key).ToList();
+        foreach (var rewardActionId in rewardsActionsIds)
+        {
+            _actions.Remove(rewardActionId);
+        }
+        //YG2.onRewardAdv = null;
+    }
+
     void OnCloseAds()
     {
-        if (_actions.TryGetValue("openADS",out Action actionOpen))
+        if (_actions.TryGetValue("openADS",out List<Action> actionsOpen))
         {
-            YG2.onOpenAnyAdv -= actionOpen;
+            foreach (var action in actionsOpen)
+            {
+                YG2.onOpenAnyAdv -= action;
+            }
         }
-        if (_actions.TryGetValue("closeADS", out Action actionClose))
+        if (_actions.TryGetValue("closeADS", out List<Action> actionsClose))
         {
-            YG2.onCloseAnyAdv -= actionClose;
-            YG2.onCloseAnyAdv -= OnCloseAds;
+            foreach (var action in actionsClose)
+            {
+                YG2.onCloseAnyAdv -= action;
+                YG2.onCloseAnyAdv -= OnCloseAds;
+            }
         }
+    }
+    
+    void OnRewardADS()
+    {
+        YG2.SkipNextInterAdCall();
     }
 
     public void SendMetrica(string eventName, Dictionary<string, object> metricaData)

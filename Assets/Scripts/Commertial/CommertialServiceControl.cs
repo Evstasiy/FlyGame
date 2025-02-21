@@ -28,17 +28,23 @@ public static class CommertialServiceControl
     {
         commertialService.SetRecord(leaderboardName, record);
     }
-    
+
+    #region ADS
     public static bool IsADSReady()
     {
         return commertialService.IsADSReady();
     }
     
+    public static void ViewRewardADS(string rewardId)
+    {
+        commertialService.ViewRewardADS(rewardId);
+    }
+
     public static void ViewADS()
     {
         commertialService.ViewADS();
     }
-
+    
     public static void SetActionOnOpenAds(Action onOpenAdsMethod)
     {
         commertialService.SetActionOnOpenAds(onOpenAdsMethod);    
@@ -48,7 +54,17 @@ public static class CommertialServiceControl
     {
         commertialService.SetActionOnCloseAds(onCloseAdsMethod);
     }
-    
+
+    public static void SetActionOnRewardAds(Action onOpenRewardAdsMethod, string rewardId)
+    {
+        commertialService.SetActionOnRewardAds(onOpenRewardAdsMethod, rewardId);
+    }
+    public static void ClearActionsOnRewardAds()
+    {
+        commertialService.ClearActionsOnRewardAds();
+    }
+    #endregion ADS
+
     public static void SendMetrica(string eventName, Dictionary<string, object> metricaData)
     {
         commertialService.SendMetrica(eventName, metricaData);

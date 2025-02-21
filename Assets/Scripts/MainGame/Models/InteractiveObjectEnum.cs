@@ -13,4 +13,8 @@ public enum InteractiveObjectEnum
     SpaceShip,
     MassClouds,
     BigCristal,
+    BigCloudRain,
+    Airplane,
+    Star,
+    MassStars,
 }

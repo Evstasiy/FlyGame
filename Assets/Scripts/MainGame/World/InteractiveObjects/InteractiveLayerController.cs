@@ -40,7 +40,7 @@ namespace Assets.Scripts.MainGame.World
         /// <summary>
         /// Диапазон для спавна объектов в высоту от позиции игрока
         /// </summary>
-        private const float ZONE_Y_TARGET_SPAWN_ITEMS = 40;
+        private const float ZONE_Y_TARGET_SPAWN_ITEMS = 35;
 
         private void Start()
         {
