@@ -43,12 +43,11 @@ public class PlayerUIController : MonoBehaviour
     [SerializeField]
     private PickItemInfoNotifyItemModel pickItemsInfoNotifyItem;
 
-    [SerializeField]
-    private Button advBoostButton;
 
     private bool isPaused => ProjectContext.instance.PauseManager.IsPause;
     private float maxPlayerSpeedWithUpdates => GlobalPlayerInfo.playerInfoModel.GetMaxPlayerSpeedWithUpdates();
     private Dictionary<string, UIItem> uiItems => ProjectContext.instance.DataBaseRepository.UITranslatorRepos.allItems;
+
 
     void Start()
     {

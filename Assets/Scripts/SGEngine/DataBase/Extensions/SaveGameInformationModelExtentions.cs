@@ -55,7 +55,8 @@ namespace Assets.Scripts.SGEngine.DataBase.Extensions
                         mainMoney = model.PlayerInformation.PlayerFeature.MainMoney,
                         specialMoney = model.PlayerInformation.PlayerFeature.SpecialMoney,
                         selectedSkinId = model.PlayerInformation.PlayerFeature.SelectedSkinId,
-                        playerDistanceRecord = model.PlayerInformation.PlayerFeature.PlayerDistanceRecord
+                        playerDistanceRecord = model.PlayerInformation.PlayerFeature.PlayerDistanceRecord,
+                        playerTutorialPoint = model.PlayerInformation.PlayerFeature.PlayerTutorialPoint
                     },
                     Save_PlayerFeatureOptions = new Save_PlayerFeatureOptions()
                     {
@@ -149,6 +150,7 @@ namespace Assets.Scripts.SGEngine.DataBase.Extensions
                     SpecialMoney = saveGameInfo.Save_PlayerFeature.Save_PlayerFeatureBase.specialMoney,
                     SelectedSkinId = saveGameInfo.Save_PlayerFeature.Save_PlayerFeatureBase.selectedSkinId,
                     PlayerDistanceRecord = saveGameInfo.Save_PlayerFeature.Save_PlayerFeatureBase.playerDistanceRecord,
+                    PlayerTutorialPoint = saveGameInfo.Save_PlayerFeature.Save_PlayerFeatureBase.playerTutorialPoint,
                 },
                 PlayerOptions = new PlayerOptionsModel()
                 {

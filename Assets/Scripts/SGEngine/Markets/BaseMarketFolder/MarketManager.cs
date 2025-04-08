@@ -1,11 +1,8 @@
 ﻿using Assets.Scripts.SGEngine.DataBase.DataBaseModels;
 using Assets.Scripts.SGEngine.DataBase.DataBaseModels.DataModelWorkers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 public class MarketManager : MonoBehaviour 
@@ -23,6 +20,15 @@ public class MarketManager : MonoBehaviour
     private bool IsOpenNow = false;
     private DataBaseRepository dataBaseRepository => DataBaseRepository.dataBaseRepository;
 
+    public event MarketOpen OnMarketOpen;
+    public delegate void MarketOpen(IMarketBase currentMarket, IList<GameObject> marketItems);
+
+    public event MarketClose OnMarketClose;
+    public delegate void MarketClose(IMarketBase currentMarket, IList<GameObject> marketItems);
+
+    public event ItemBuy OnItemBuy;
+    public delegate void ItemBuy(IItem item);
+
     /// <summary>
     /// Метод закрытия магазина с очисткой контента
     /// </summary>
@@ -32,7 +38,8 @@ public class MarketManager : MonoBehaviour
         try 
         {
             CleanContentZone();
-            AudioController.Instance.PlayClip("Click");
+            AudioController.Instance.PlayClip("Click"); 
+            OnMarketClose?.Invoke(CurrentMarket, MarketItems);
             return true;
         } 
         catch (Exception ex)
@@ -65,9 +72,6 @@ public class MarketManager : MonoBehaviour
         {
             case EnumMarkets.ShopMarket:
                 CurrentMarket = new ShopMarket();
-                break;
-            case EnumMarkets.UpgradeItemMarket:
-                CurrentMarket = new UpgradeItemsMarket();
                 break;
             case EnumMarkets.BoostPlayerItemsMarket:
                 CurrentMarket = new BoostPlayerItemsMarket();
@@ -108,6 +112,7 @@ public class MarketManager : MonoBehaviour
         MarketItems = CurrentMarket.InstanceItemsInContentZone(contentZone.transform, this, typeMarketOpen);
         IsOpenNow = true;
         AudioController.Instance.PlayClip("Click");
+        OnMarketOpen?.Invoke(CurrentMarket, MarketItems);
     }
 
     /// <summary>
@@ -121,7 +126,8 @@ public class MarketManager : MonoBehaviour
         if (result != EnumActionMarketItem.NotSold) 
         {
             CurrentMarket.BuyItem(item);
-            AudioController.Instance.PlayClip("Buy");
+            AudioController.Instance.PlayClip("Buy"); 
+            OnItemBuy?.Invoke(item);
         }
         return result;
     }

@@ -6,8 +6,8 @@ namespace Assets.Scripts.SGEngine.DataBase.Models
     public class SaveGameInformationModel
     {
         public PlayerInformationModel PlayerInformation;
-        public SaveWorldObjectsModel SaveWorldObjects ;
-        public SaveUpgradesModel SaveUpgrades ;
+        public SaveWorldObjectsModel SaveWorldObjects;
+        public SaveUpgradesModel SaveUpgrades;
 
         public SaveGameInformationModel() 
         {

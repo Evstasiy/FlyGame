@@ -5,7 +5,8 @@
 	specialMoney="0" 
 	experience="0" 
 	selectedSkinId = "1"
-	playerDistanceRecord = "0"/>
+	playerDistanceRecord = "0"
+	playerTutorialPoint = "0"/>
     <Save_PlayerFeatureOptions language="0" isMusic="0" isAd="1" isFinishedTutorial="false"/>
     
   </Save_PlayerFeatures>

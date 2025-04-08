@@ -20,8 +20,6 @@ public class BoostPlayerItemMarketUI : MonoBehaviour
     [SerializeField]
     private TMP_Text UiItem_BuffEffectNextTMP;
     [SerializeField]
-    private TMP_Text UiItem_BuyTextTMP;
-    [SerializeField]
     private TMP_Text UiItem_EffectNowTextTMP;
     [SerializeField]
     private UnityEngine.UI.Image Icon;
@@ -56,14 +54,14 @@ public class BoostPlayerItemMarketUI : MonoBehaviour
         //Icon.sprite = itemModel.BasePrice.ToString();
         NameTextLable.text = itemModel.Name.ToString();
         DescriptionTextLable.text = itemModel.Description.ToString();
-        UiItem_BuffEffectNowTMP.text = itemModel.FinalEffectNow.ToString();
-        UiItem_BuffEffectNextTMP.text = "+" + itemModel.BaseEffectCount.ToString();
+        UiItem_BuffEffectNowTMP.text = itemModel.UserCount.ToString();
+        UiItem_BuffEffectNextTMP.text = "/" + itemModel.MaxBuyCount.ToString();
+        Icon.sprite = Resources.Load<Sprite>(itemModel.IconPath);
     }
     
     public void PrepareUITranslate(Dictionary<string, UIItem> uiItems)
     {
         UiItem_EffectNowTextTMP.text = uiItems["EffectNowText"].Description.ToString();
-        UiItem_BuyTextTMP.text = uiItems["BuyBtnText"].Description.ToString();
     }
 
     public void OnBuyItemClick()
@@ -100,7 +98,6 @@ public class BoostPlayerItemMarketUI : MonoBehaviour
         {
             case EnumActionMarketItem.NotSold:
                 StateBackground.SetActive(true);
-                Icon.color = Color.red;
                 break;
             case EnumActionMarketItem.Sold:
                 BuyItemUI();
@@ -139,6 +136,6 @@ public class BoostPlayerItemMarketUI : MonoBehaviour
 
     private void BuyItemUI() 
     {
-        UiItem_BuffEffectNowTMP.text = itemModel.FinalEffectNow.ToString();
+        UiItem_BuffEffectNowTMP.text = itemModel.UserCount.ToString();
     }
 }

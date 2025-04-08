@@ -38,7 +38,7 @@ public class AudioController : MonoBehaviour
         }
         else
         {
-            audioSource.Pause();
+            audioSource?.Pause();
         }
     }
 
@@ -68,9 +68,11 @@ public class AudioController : MonoBehaviour
             //Debug.LogError("AudioSong not found with name: " + audioSongName);
             return;
         }
-
-        audioSource.clip = audioContainer.AudioClips.First();
-        audioSource.Play();
+        if(audioSource != null)
+        {
+            audioSource.clip = audioContainer.AudioClips.First();
+            audioSource.Play();
+        }
     }
 }
 

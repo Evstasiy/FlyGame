@@ -28,7 +28,12 @@ public class UpgradeBoostGameItemUI : MonoBehaviour
     [SerializeField]
     private TMP_Text DescriptionTextLable;
     [SerializeField]
-    private TMP_Text UiItem_BuyTextTMP;
+    private Animator animatorUI;
+
+    [SerializeField]
+    private GameObject MainView;
+    [SerializeField]
+    private GameObject SecondView;
 
     /// <summary>
     /// Менеджер магазинов для возаимодействия
@@ -58,15 +63,12 @@ public class UpgradeBoostGameItemUI : MonoBehaviour
         LvlTextLable.text = gameItem.LvlToUnlock.ToString();
 
         IconImg.sprite = Resources.Load<Sprite>(gameItem.IconPath);
+        IconImg.sprite = Resources.Load<Sprite>(gameItem.IconPath);
         PurchasedIconImg.gameObject.SetActive(false);
         LockIconImg.gameObject.SetActive(false);
         StatusItemImg.gameObject.SetActive(false);
     }
 
-    public void PrepareUITranslate(Dictionary<string, UIItem> uiItems)
-    {
-        UiItem_BuyTextTMP.text = uiItems["BuyBtnText"].Description.ToString();
-    }
     public void OnBuyItemClick() 
     {
         var result = marketBase.TryToBuy(gameItem);
@@ -88,6 +90,18 @@ public class UpgradeBoostGameItemUI : MonoBehaviour
                 PurchasedItem();
                 break;
         }
+    }
+    
+    public void ChangeItemView()
+    {
+        animatorUI.SetBool("IsOpenDescription", true);
+    }
+    
+    public void IsDescriptionOpen()
+    {
+        animatorUI.SetBool("IsOpenDescription", false);
+        MainView.SetActive(!MainView.activeSelf);
+        SecondView.SetActive(!SecondView.activeSelf);
     }
 
     private void SetUiForBuy(EnumActionMarketItem enumActionMarketItem) 

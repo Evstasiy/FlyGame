@@ -56,11 +56,6 @@ public class MenuUIController : MonoBehaviour
     [SerializeField]
     private Button gameOverRewardBtn;
 
-    [SerializeField]
-    private GameObject playerBoostRewardInput;
-
-    private List<string> rewardsIds = new List<string>();
-
     void Start()
     {
         isActiveSongUI = ProjectContext.instance.DataBaseRepository.PlayerFeaturesRepos.GetPlayerIsMusic();
@@ -80,20 +75,6 @@ public class MenuUIController : MonoBehaviour
         animatorMenuUI.SetBool("isPause", isActiveMenuUI);
         AudioController.Instance.PlayClip("Click");
     }
-    
-    public void SetActiveAdvMenuUI(bool isActiveUI)
-    {
-        ProjectContext.instance.PauseManager.SetPause(isActiveUI);
-        adsMenuUI.SetActive(isActiveUI);
-        //animatorMenuUI.SetBool("isPause", isActiveUI);
-        AudioController.Instance.PlayClip("Click");
-    }
-    public void ViewADSForReward(string rewardId)
-    {
-        CommertialServiceControl.SetActionOnRewardAds(RewardADSView(rewardId), rewardId);
-        CommertialServiceControl.ViewRewardADS(rewardId);
-    }
-
     public void TryExitInMainScene()
     {
         mainMenuDialogUI.SetActive(false);
@@ -135,6 +116,8 @@ public class MenuUIController : MonoBehaviour
 
     private void IsGameOver()
     {
+        SetVisibleButtonGameOver(false);
+        gameOverRewardBtn.gameObject.SetActive(false);
         var playerFinalDistance = (int)GlobalPlayerInfo.playerInfoModel.PlayerDistance;
         float gameOverExpRecord = 0;
         gameOverMenuUI.SetActive(true);
@@ -159,43 +142,18 @@ public class MenuUIController : MonoBehaviour
             { gameOverSpecialCoinsText, GlobalPlayerInfo.playerInfoModel.PlayerSpecialCoins},
             { gameOverExpText, GlobalPlayerInfo.playerInfoModel.GetFinalResultExp()}
         };
-        StartCoroutine(DisplayScores(displayItems));
+        StartCoroutine(UIHelper.DisplayScores(displayItems, actionAfterFinish: () =>
+        {
+            SetVisibleButtonGameOver(true);
+            if(GlobalPlayerInfo.playerInfoModel.PlayerCoins > 0)
+            {
+                gameOverRewardBtn.gameObject.SetActive(true);
+            }
+        } 
+        ));
         //CommertialServiceControl.SetActionOnOpenAds(()=> { SetVisibleButtonGameOver(false); });
         //CommertialServiceControl.SetActionOnCloseAds(() => { SetVisibleButtonGameOver(true); });
         CheckAndGetGameOverInfoForPlayer();
-    }
-
-    private IEnumerator DisplayScores(Dictionary<TMP_Text, float> displayItems)
-    {
-        float duration = 1f;// Время анимации для каждого параметра
-        int currentIndex = 0;
-        // Обрабатываем каждый параметр по очереди
-        foreach (var field in displayItems)
-        {
-            float currentValue = 0f;
-            float targetValue = field.Value;
-            float timeElapsed = 0f;
-            if(targetValue == 0)
-            {
-                currentIndex++;
-                continue;
-            }
-
-            while (timeElapsed < duration)
-            {
-                currentValue = Mathf.Lerp(0f, targetValue, timeElapsed / duration);
-                field.Key.text = Mathf.RoundToInt(currentValue).ToString();
-                timeElapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            field.Key.text = Mathf.RoundToInt(targetValue).ToString();
-
-            currentIndex++;
-
-            if (currentIndex >= displayItems.Count)
-                break;
-        }
     }
 
     private void IsNewRecord()
@@ -219,34 +177,6 @@ public class MenuUIController : MonoBehaviour
                 gameOverInfoText.gameObject.SetActive(true);
                 gameOverInfoText.text = ProjectContext.instance.DataBaseRepository.UITranslatorRepos.allItems["GameOverInfo_PlayerCanFlyInCloud"].Description;
             }
-        }
-    }
-
-    private Action RewardADSView(string rewardID)
-    {
-        if(rewardID == ADSInfo.REWARD_ID_GameOver)
-        {
-            gameOverRewardBtn.gameObject.SetActive(false);
-            return () => 
-            {
-                GlobalPlayerInfo.playerInfoModel.AddPlayerCoins(GlobalPlayerInfo.playerInfoModel.PlayerCoins);
-                StartCoroutine(DisplayScores(new Dictionary<TMP_Text, float>()
-                {
-                    { gameOverCoinsText, GlobalPlayerInfo.playerInfoModel.PlayerCoins }
-                }));
-                Debug.Log("ShowReward!");
-            };
-        }
-        else
-        {
-            playerBoostRewardInput.SetActive(false);
-            adsMenuUI.SetActive(false);
-            ProjectContext.instance.PauseManager.SetPause(false);
-            return () =>
-            {
-                //playerEffectController.AddEffect(adsEffectBoost);
-                Debug.Log("Reward in mainGame");
-            };
         }
     }
 

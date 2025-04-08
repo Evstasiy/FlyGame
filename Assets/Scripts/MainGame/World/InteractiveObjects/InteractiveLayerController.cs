@@ -22,14 +22,12 @@ namespace Assets.Scripts.MainGame.World
         public int maxSpawnPerStep = 10;
 
         private Coroutine coroutine = null;
-
         private List<(GameObject, InteractiveObjectModel)> activeInteractiveGameObjects = new List<(GameObject, InteractiveObjectModel)>();
 
         public delegate void NewInteractiveObjectSpawn(GameObject interactiveObject, InteractiveObjectModel interactiveObjectModel);
         public event NewInteractiveObjectSpawn IsNewInteractiveObjectSpawn;
 
         private IEnumerable<InteractiveObjectEnum> canSpawnTypes;
-        //private IEnumerable<InteractiveObjectEnum> temporarySpawnTypes = new List<InteractiveObjectEnum>();
         private Dictionary<EffectEnum, IEnumerable<InteractiveObjectEnum>> temporaryEffectSpawnTypes = new Dictionary<EffectEnum, IEnumerable<InteractiveObjectEnum>>();
         private List<InteractiveObjectEnum> excludeSpawnTypes = new List<InteractiveObjectEnum>();
 
@@ -45,9 +43,10 @@ namespace Assets.Scripts.MainGame.World
         private void Start()
         {
             ProjectContext.instance.PlayerController.OnPlayerPositionYChange += PlayerPositionYChange;
+            lastPlayerPositionY = 100;
         }
 
-        public GameObject SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum objectType, Vector3 position)
+        public GameObject SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum objectType, Vector3? position)
         {
             var objectForSpawn = InteractiveObjectModels.FirstOrDefault(x => x.ObjectType == objectType);
             var newObj = SpawnObject(objectForSpawn, position);
@@ -168,18 +167,19 @@ namespace Assets.Scripts.MainGame.World
         {
             float spawnZoneYMin = lastPlayerPositionY - ZONE_Y_TARGET_SPAWN_ITEMS;
             float spawnZoneYMax = lastPlayerPositionY + ZONE_Y_TARGET_SPAWN_ITEMS;
-            if(spawnZoneYMin <= ProjectContext.MIN_POS_Y + ProjectContext.STEP_TO_END_POS_Y)
+            if (spawnZoneYMin <= ProjectContext.MIN_POS_Y + ProjectContext.STEP_TO_END_POS_Y)
             {
                 spawnZoneYMin = ProjectContext.MIN_POS_Y + ProjectContext.STEP_TO_END_POS_Y;
                 spawnZoneYMax += ProjectContext.STEP_TO_END_POS_Y;
-            }
-            else if(spawnZoneYMax >= ProjectContext.MAX_POS_Y - ProjectContext.STEP_TO_END_POS_Y)
+            } else if (spawnZoneYMax >= ProjectContext.MAX_POS_Y - ProjectContext.STEP_TO_END_POS_Y)
             {
                 spawnZoneYMin += ProjectContext.STEP_TO_END_POS_Y;
                 spawnZoneYMax = ProjectContext.MAX_POS_Y - ProjectContext.STEP_TO_END_POS_Y;
             }
-            float posX = Random.Range(140, 300);
+
+            float posX = Random.Range(65, 100);
             float randomY = Random.Range(spawnZoneYMin, spawnZoneYMax);
+           
             Vector3 randomPosition = new Vector3(posX, randomY, 0);
             return randomPosition;
         }

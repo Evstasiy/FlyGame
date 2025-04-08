@@ -70,6 +70,11 @@ public class PlayerFeaturesRepository : IDataBaseRepository
         return this.saveGameInformation.PlayerInformation.PlayerOptions.IsMusic;
     }
 
+    public int GetPlayerTutorialPoint()
+    {
+        return saveGameInformation.PlayerInformation.PlayerFeature.PlayerTutorialPoint;
+    }
+
     public bool GetIsFinishedTutorial()
     {
         return saveGameInformation.PlayerInformation.PlayerOptions.IsFinishedTutorial;
@@ -100,6 +105,21 @@ public class PlayerFeaturesRepository : IDataBaseRepository
     public bool SetPlayerIsFinishedTutorial(bool isFinishedTutorial)
     {
         saveGameInformation.PlayerInformation.PlayerOptions.IsFinishedTutorial = isFinishedTutorial;
+        SaveChanges();
+        return true;
+    }
+
+    /// <summary>
+    /// Установить пройденную позицию туториала
+    /// </summary>
+    /// <param name="tutorialPoint">
+    /// 0 - приветствие
+    /// 1 - первый полет
+    /// </param>
+    /// <returns></returns>
+    public bool SetPlayerTutorialPoint(int tutorialPoint)
+    {
+        saveGameInformation.PlayerInformation.PlayerFeature.PlayerTutorialPoint = tutorialPoint;
         SaveChanges();
         return true;
     }

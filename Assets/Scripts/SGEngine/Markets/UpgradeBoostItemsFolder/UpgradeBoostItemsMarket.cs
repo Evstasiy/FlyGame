@@ -41,7 +41,6 @@ public class UpgradeBoostItemsMarket : IMarketBase   {
             itemMarket.marketBase = marketManager;
             gameItemsObjs.Add(itemObject);
             upgradeItems.Add(itemMarket);
-            itemMarket.PrepareUITranslate(uiTranslateRepo.allItems);
         }
         CheckAndSetItemsStatus();
         return gameItemsObjs;

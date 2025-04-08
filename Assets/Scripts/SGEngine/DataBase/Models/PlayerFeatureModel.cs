@@ -14,5 +14,7 @@ namespace Assets.Scripts.SGEngine.DataBase.Models
         public int SelectedSkinId;
 
         public int PlayerDistanceRecord;
+
+        public int PlayerTutorialPoint;
     }
 }

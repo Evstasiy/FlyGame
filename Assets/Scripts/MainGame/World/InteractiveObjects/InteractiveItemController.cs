@@ -153,7 +153,7 @@ public class InteractiveItemController : MonoBehaviour, IInteractiveObjectBase
                 float horizontalSpacing = Spacing; // Шаг по горизонтали
                 float verticalSpacing = Spacing;   // Шаг по вертикали
 
-                x = x - counter * horizontalSpacing;
+                x = x + counter * horizontalSpacing;
 
                 int peakPoint = allItemsCount / 2;
                 if (counter < peakPoint)

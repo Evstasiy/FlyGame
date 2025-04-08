@@ -1,13 +1,18 @@
 using Assets.Scripts.MainGame.Player;
 using Assets.Scripts.MainGame.World;
 using Assets.Scripts.SGEngine.DataBase.DataBaseModels;
+using Assets.Scripts.SGEngine.DataBase.DataBaseModels.DataModelWorkers;
 using Assets.Scripts.SGEngine.DataBase.Models;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static MarketManager;
 
 /*FIX!!!
  Весь класс переписать
@@ -18,17 +23,27 @@ public class TutorialController : MonoBehaviour
     public delegate void TutorialDone();
 
     [SerializeField]
+    private Image tutorialArrow;
+    [SerializeField]
     private GameObject[] uiElementsNeedToDisabled;
     [SerializeField]
     private GameObject[] uiElements;
     [SerializeField]
     private TMP_Text tutorialText;
     [SerializeField]
+    private GameObject tutorialBackImg;
+    [SerializeField]
     private Button OkButton;
     [SerializeField]
     private Button tutorialButtonInMainMeny;
     [SerializeField]
     private TMP_Text OkButtonText;
+    [SerializeField]
+    private GameObject playerControllObject;
+
+    [SerializeField]
+    private MarketManager marketManagerUpdate;
+
 
     [SerializeField]
     private RotateObject rotatePlayerInMainMenu;
@@ -37,12 +52,21 @@ public class TutorialController : MonoBehaviour
     [SerializeField]
     private InteractiveLayerController interactiveLayerController;
     [SerializeField]
+    private LayerController layerController;
+    [SerializeField]
     private GameObject playerFlyZone;
+    [SerializeField]
+    private GameObject playerFlyZoneTop;
+    [SerializeField]
+    private PlayerItemsController playerItemsController;
+    [SerializeField]
+    private PlayerEffectController playerEffectController;
     private DataBaseRepository dataBaseRepository => DataBaseRepository.dataBaseRepository;
 
     private int counter = 0;
     private Coroutine activeCoroutineForViewPlayer = null;
     private Coroutine activeCoroutineForFrizePlayer = null;
+    private Coroutine activeCoroutineForGetPlayerSpawn = null;
     /// <summary>
     /// Костыль чтобы показываь последний объект из корутины с эффектом мерцания
     /// </summary>
@@ -50,15 +74,38 @@ public class TutorialController : MonoBehaviour
 
     private readonly int minPlayerFlyZone = 100;
     private readonly int maxPlayerFlyZone = 190;
+
+    private readonly int minPlayerFlyZoneCloud = 270;
+    private readonly int maxPlayerFlyZoneCloud = 370;
     
-    void Start()
+    public void StartTutorialAgain()
     {
+        DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.SetPlayerIsFinishedTutorial(false);
+        DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.SetPlayerTutorialPoint(0);
+        StartTutorialInMainMeny();
     }
 
     public void CheckAndPlayTutorial()
     {
         if (!DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.GetIsFinishedTutorial())
         {
+            var point = DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.GetPlayerTutorialPoint();
+            switch (point)
+            {
+                case 0:
+                    counter = 0;
+                    break;
+                case 1:
+                    counter = 50;
+                    break;
+                case 2:
+                    counter = 3;
+                    break;
+                case 3:
+                    counter = 65;
+                    break;
+            }
+
             if (SceneManager.GetActiveScene().name == "FlyGame")
             {
                 StartTutorialInGame();
@@ -104,7 +151,7 @@ public class TutorialController : MonoBehaviour
         tutorialButtonInMainMeny.interactable = false;
         this.gameObject.SetActive(false);
     }
-    
+
     public void NextTutorialInMainMeny()
     {
         OkButton.interactable = false;
@@ -112,61 +159,91 @@ public class TutorialController : MonoBehaviour
         dataBaseRepository.UITranslatorRepos.allItems.TryGetValue("Tutorial_" + counter, out UIItem uIItem);
         string nextText = (uIItem == null) ? string.Empty : uIItem.Description;
         tutorialText.text = nextText;
-        if(counter != 0)
+        if (counter != 0)
         {
-            AudioController.Instance.PlayClip("Click");
+            AudioController.Instance?.PlayClip("Click");
         }
         if (activeCoroutineForViewPlayer != null)
         {
-            lastGameObjectInShowCoroutine.SetActive(true);
-            lastGameObjectInShowCoroutine = null;
             StopCoroutine(activeCoroutineForViewPlayer);
         }
+
+        var playBtn = uiElements.FirstOrDefault(x => x.name == "PlayBtn");
+        var playerUpdateBtn = uiElements.FirstOrDefault(x => x.name == "PlayerUpdatesBtn");
+        var boostBtn = uiElements.FirstOrDefault(x => x.name == "BoostsBtn");
+
+
         switch (counter)
         {
             case 0:
                 break;
             case 1:
-                var lvlPanel = uiElements.FirstOrDefault(x => x.name == "LevelPanel");
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(lvlPanel));
-                break;
-            case 2:
-                var coinsPanel = uiElements.FirstOrDefault(x => x.name == "MainMoneyBackground");
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(coinsPanel));
+                playBtn.SetActive(true);
+                OkButton.gameObject.SetActive(false);
+                DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.SetPlayerTutorialPoint(1);
                 break;
             case 3:
-                var specialCoinsPanel = uiElements.FirstOrDefault(x => x.name == "SpecialMoneyBackground");
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(specialCoinsPanel));
-                break;
+                marketManagerUpdate.OnMarketOpen += OnMarketOpen;
+                marketManagerUpdate.OnMarketClose += OnMarketClose;
+                marketManagerUpdate.OnItemBuy += OnItemBuy;
+                var mainUI = uiElements.FirstOrDefault(x => x.name == "MainUI");
+                mainUI.SetActive(true);
+                OkButton.gameObject.SetActive(false);
+                playBtn.SetActive(true);
+                playBtn.GetComponent<Button>().interactable = false;
+                playerUpdateBtn.SetActive(true);
+                var playerUpdate = DataBaseRepository.dataBaseRepository.BoostObjectsRepos.saveUpgradeBoostPlayerItems.FirstOrDefault(x => x.Id == 3);
+                if (playerUpdate?.UserCount == 0 || playerUpdate == null)
+                {
+                    playerUpdateBtn.GetComponent<Button>().interactable = true;
+                    var costPlayerBoost = DataBaseRepository.dataBaseRepository.BoostObjectsRepos.allUpgradeBoostPlayerItems.FirstOrDefault(x => x.Id == 3).BasePrice;
+                    var needPlayerMoney = costPlayerBoost - DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.GetPlayerMoney();
+                    if (needPlayerMoney >= 0)
+                    {
+                        DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.AddPlayerMoney(Math.Abs(needPlayerMoney));
+                    }
+                }
+                else
+                {
+                    playerUpdateBtn.GetComponent<Button>().interactable = false;
+                    counter = 5;
+                    NextTutorialInMainMeny();
+                }
+                return;
             case 4:
-                var openMenuUIBtn = uiElements.FirstOrDefault(x => x.name == "OpenMenuUIBtn");
-                openMenuUIBtn.GetComponent<Button>().interactable = false;
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(openMenuUIBtn));
+                
                 break;
             case 5:
-                var updateBoostBtn = uiElements.FirstOrDefault(x => x.name == "UpdateBoostBtn");
-                updateBoostBtn.GetComponent<Button>().interactable = false;
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(updateBoostBtn));
-                break;
+                tutorialText.gameObject.SetActive(true);
+                playerUpdateBtn.GetComponent<Button>().interactable = false;
+                boostBtn.SetActive(true);
+                if (!DataBaseRepository.dataBaseRepository.UpgradBoostObjectsRepos.saveUpgradeBoostItems.Any(x => x.Id == 20))
+                {
+                    if (DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.GetPlayerMoney() < 40)
+                    {
+                        DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.AddPlayerMoney(40);
+                    }
+                    boostBtn.GetComponent<Button>().interactable = true;
+                }
+                else
+                {
+                    boostBtn.GetComponent<Button>().interactable = false;
+                    counter = 7;
+                    activeCoroutineForGetPlayerSpawn = StartCoroutine(DoActionWithTime(1.5f,()=>NextTutorialInMainMeny()));
+                }
+                return;
             case 6:
-                var shopBtn = uiElements.FirstOrDefault(x => x.name == "ShopBtn");
-                shopBtn.GetComponent<Button>().interactable = false;
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(shopBtn));
                 break;
             case 7:
-                var achivmentsBtn = uiElements.FirstOrDefault(x => x.name == "AchivmentsBtn");
-                achivmentsBtn.GetComponent<Button>().interactable = false;
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(achivmentsBtn));
-                break;
-            case 8:
-                var skinShopBtn = uiElements.FirstOrDefault(x => x.name == "SkinShopBtn");
-                skinShopBtn.GetComponent<Button>().interactable = false;
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(skinShopBtn));
-                break;
-            case 9:
-                var playBtn = uiElements.FirstOrDefault(x => x.name == "PlayBtn");
-                playBtn.GetComponent<Button>().interactable = false;
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(playBtn));
+                if(activeCoroutineForGetPlayerSpawn != null)
+                {
+                    StopCoroutine(activeCoroutineForGetPlayerSpawn);
+                }
+                tutorialText.gameObject.SetActive(true);
+                OkButton.gameObject.SetActive(false);
+                boostBtn.GetComponent<Button>().interactable = false;
+                playBtn.GetComponent<Button>().interactable = true;
+                DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.SetPlayerTutorialPoint(3);
                 break;
             default:
                 EndTutorialInMainMeny();
@@ -174,7 +251,7 @@ public class TutorialController : MonoBehaviour
         }
         counter++;
     }
-
+    
     public void StartTutorialInGame()
     {
         gameObject.SetActive(true);
@@ -182,18 +259,19 @@ public class TutorialController : MonoBehaviour
         ProjectContext.instance.PlayerController.gameObject.transform.position = new Vector3(playerPos.x, minPlayerFlyZone + ((maxPlayerFlyZone - minPlayerFlyZone)/2f), playerPos.z);
 
         playerFlyZone.SetActive(true);
+        playerControllObject.SetActive(false);
 
         interactiveLayerController.IsAutoSpawnObjects = false;
-
-        counter = 50;
+        playerItemsController.IsItemPickUp += PlayerPickUpItem;
 
         if(activeCoroutineForFrizePlayer != null)
         {
             StopCoroutine(activeCoroutineForFrizePlayer);
         }
-        activeCoroutineForFrizePlayer = StartCoroutine(FrizePlayerInZone());
-        StartCoroutine(SetPauseGameAfterTime(2f));
-        
+        activeCoroutineForFrizePlayer = StartCoroutine(FrizePlayerInZone(maxPlayerFlyZone, minPlayerFlyZone));
+        StartCoroutine(SetPauseGameAfterTime(0.5f));
+
+        tutorialBackImg.SetActive(false);
         tutorialText.gameObject.SetActive(false);
         OkButton.gameObject.SetActive(false);
 
@@ -207,6 +285,7 @@ public class TutorialController : MonoBehaviour
         tutorialText.text = string.Empty;
         NextTutorialInGame();
     }
+
     public void NextTutorialInGame()
     {
         OkButton.interactable = false;
@@ -214,11 +293,6 @@ public class TutorialController : MonoBehaviour
         dataBaseRepository.UITranslatorRepos.allItems.TryGetValue("Tutorial_" + counter, out UIItem uIItem);
         string nextText = (uIItem == null) ? string.Empty : uIItem.Description;
         tutorialText.text = nextText;
-        int[] notClickCounters = new int[] { 50, 58, 60, 62, 65, 68 };
-        if (!notClickCounters.Any(x=>x == counter))
-        {
-            AudioController.Instance.PlayClip("Click");
-        }
         if (activeCoroutineForViewPlayer != null)
         {
             if(lastGameObjectInShowCoroutine != null)
@@ -231,115 +305,185 @@ public class TutorialController : MonoBehaviour
         switch (counter)
         {
             case 50:
+                uiElements.FirstOrDefault(x => x.name == "MenuUIButton").GetComponent<Button>().interactable = false;
                 break;
             case 51:
-                var menuUIButton = uiElements.FirstOrDefault(x => x.name == "MenuUIButton");
-                menuUIButton.GetComponent<Button>().interactable = false;
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(menuUIButton));
+                playerControllObject.SetActive(true);
+                interactiveLayerController.SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum.MassNormalBirds, new Vector3(100, ProjectContext.instance.PlayerController.gameObject.transform.position.y, ProjectContext.instance.PlayerController.gameObject.transform.position.z));
+                if(playerEffectController.GetActiveEffectObjectModels().Any(x=>x.EffectType == EffectEnum.PlayerMobility))
+                {
+                    playerEffectController.RemoveEffect(playerEffectController.GetActiveEffectObjectModels().FirstOrDefault(x => x.EffectType == EffectEnum.PlayerMobility));
+                }
                 break;
             case 52:
-                var playerLayerWorldText = uiElements.FirstOrDefault(x => x.name == "PlayerLayerWorldText");
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(playerLayerWorldText));
-                break;
+                GlobalPlayerInfo.playerInfoModel.SetPlayerDistance(0);
+                ProjectContext.instance.PauseManager.SetPause(false);
+                tutorialText.gameObject.SetActive(false);
+                tutorialBackImg.SetActive(false);
+                OkButton.gameObject.SetActive(false);
+                SetActiveInMainGame(true, false);
+                StartCoroutine(ContinueTutorialAfterTime(5f));
+                GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(100f);
+                counter--;
+                return;
             case 53:
-                var tracePanel = uiElements.FirstOrDefault(x => x.name == "TracePanel");
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(tracePanel));
-                break;
-            case 54:
+                playerControllObject.SetActive(false);
                 var playerInfoUI = uiElements.FirstOrDefault(x => x.name == "PlayerInfoUI");
                 activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(playerInfoUI));
                 break;
-            case 55:
-                var speedPlayerPanel = uiElements.FirstOrDefault(x => x.name == "SpeedPlayerPanel");
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(speedPlayerPanel));
-                break;
-            case 56:
-                var effectIconsPanel = uiElements.FirstOrDefault(x => x.name == "EffectIconsPanel");
-                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(effectIconsPanel));
-
-                break;
-            case 57:
-                ProjectContext.instance.PauseManager.SetPause(false);
-                tutorialText.gameObject.SetActive(false);
-                OkButton.gameObject.SetActive(false);
-                SetActiveInMainGame(true, false);
-                counter++;
-                StartCoroutine(ContinueTutorialAfterTime(5f));
-                GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(100f);
-                return;
-
-            case 58:
-                interactiveLayerController.SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum.MassNormalBirds, new Vector3(50, ProjectContext.instance.PlayerController.gameObject.transform.position.y, ProjectContext.instance.PlayerController.gameObject.transform.position.z));
-                break;
-            case 59:
-                ProjectContext.instance.PauseManager.SetPause(false);
-                tutorialText.gameObject.SetActive(false);
-                OkButton.gameObject.SetActive(false);
-                SetActiveInMainGame(true, false);
-                counter++;
-                StartCoroutine(ContinueTutorialAfterTime(5f));
-                return;
-            case 60:
-                var objBoostSpeed = interactiveLayerController.SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum.BoostSpeed, new Vector3(50, ProjectContext.instance.PlayerController.gameObject.transform.position.y, ProjectContext.instance.PlayerController.gameObject.transform.position.z));
-                ShowPlayerObject(uiElements.FirstOrDefault(x => x.name == "SpeedPlayerPanel"));
-                objBoostSpeed.GetComponent<IInteractiveObjectBase>().SetTargetToMove(ProjectContext.instance.PlayerController.gameObject.transform);
-                break;
-            case 61:
-                ProjectContext.instance.PauseManager.SetPause(false);
-                tutorialText.gameObject.SetActive(false);
-                OkButton.gameObject.SetActive(false);
-                SetActiveInMainGame(true, false);
-                counter++;
-                StartCoroutine(ContinueTutorialAfterTime(4f));
-                return;
-            case 62:
-                break;
-            case 63:
-                interactiveLayerController.SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum.NormalBirds, new Vector3(70, ProjectContext.instance.PlayerController.gameObject.transform.position.y, ProjectContext.instance.PlayerController.gameObject.transform.position.z));
-                break;
-            case 64:
-                ProjectContext.instance.PauseManager.SetPause(false);
-                tutorialText.gameObject.SetActive(false);
-                OkButton.gameObject.SetActive(false);
-                SetActiveInMainGame(true, false);
-                counter++;
-                StartCoroutine(ContinueTutorialAfterTime(4f));
-                GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(100f);
-                return;
-            case 65:
-                break;
-            case 66:
+            case 54:
                 interactiveLayerController.SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum.MassCoins, new Vector3(70, ProjectContext.instance.PlayerController.gameObject.transform.position.y, ProjectContext.instance.PlayerController.gameObject.transform.position.z));
                 break;
-            case 67:
+            case 55:
+                GlobalPlayerInfo.playerInfoModel.SetPlayerDistance(0);
                 ProjectContext.instance.PauseManager.SetPause(false);
                 tutorialText.gameObject.SetActive(false);
+                tutorialBackImg.SetActive(false);
                 OkButton.gameObject.SetActive(false);
                 SetActiveInMainGame(true, false);
                 StartCoroutine(ContinueTutorialAfterTime(4f));
                 GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(100f);
+                counter--;
+                return;
+            case 56:
+                //Это скорость. Чем она ниже, тем сложнее лететь вверх.
+                var speedUI = uiElements.FirstOrDefault(x => x.name == "SpeedPlayerPanel");
+                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(speedUI));
                 break;
+            case 57:
+                interactiveLayerController.SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum.MassBoostSpeed, new Vector3(70, ProjectContext.instance.PlayerController.gameObject.transform.position.y, ProjectContext.instance.PlayerController.gameObject.transform.position.z));
+                break;
+            case 58:
+                GlobalPlayerInfo.playerInfoModel.SetPlayerDistance(0);
+                ProjectContext.instance.PauseManager.SetPause(false);
+                tutorialText.gameObject.SetActive(false);
+                tutorialBackImg.SetActive(false);
+                OkButton.gameObject.SetActive(false);
+                SetActiveInMainGame(true, false);
+                StartCoroutine(ContinueTutorialAfterTime(3f));
+                GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(100f);
+                counter--;
+                return;
+            case 59:
+                //свободно полетай
+                break;
+            case 60:
+                DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.SetPlayerTutorialPoint(2);
+                StopTutorialInGame();
+                break;
+
+            case 65:
+                var speedPlayerUI = uiElements.FirstOrDefault(x => x.name == "SpeedPlayerPanel");
+                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(speedPlayerUI));
+                OkButton.gameObject.SetActive(true);
+                break;
+            case 66:
+                tutorialText.gameObject.SetActive(true);
+                tutorialBackImg.SetActive(true);
+                var objBoostSpeed = interactiveLayerController.SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum.BoostSpeed, new Vector3(50, ProjectContext.instance.PlayerController.gameObject.transform.position.y, ProjectContext.instance.PlayerController.gameObject.transform.position.z));
+                objBoostSpeed.GetComponent<IInteractiveObjectBase>().SetTargetToMove(ProjectContext.instance.PlayerController.gameObject.transform);
+                break;
+            case 67:
+                uiElements.FirstOrDefault(x => x.name == "MenuUIButton").GetComponent<Button>().interactable = false;
+                ProjectContext.instance.PauseManager.SetPause(false);
+                tutorialText.gameObject.SetActive(false);
+                tutorialBackImg.SetActive(false);
+                OkButton.gameObject.SetActive(false);
+                SetActiveInMainGame(true, false);
+                StartCoroutine(ContinueTutorialAfterTime(3f));
+                GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(200f);
+                GlobalPlayerInfo.playerInfoModel.SetPlayerDistance(0);
+                counter++;
+                return;
             case 68:
+                var effectIconsPanel = uiElements.FirstOrDefault(x => x.name == "EffectIconsPanel");
+                activeCoroutineForViewPlayer = StartCoroutine(ShowPlayerObject(effectIconsPanel));
+                break;
+            case 69:
+                OkButton.gameObject.SetActive(true);
+                StopCoroutine(activeCoroutineForFrizePlayer);
+                activeCoroutineForFrizePlayer = StartCoroutine(FrizePlayerInZone(null, minPlayerFlyZone));
+                playerFlyZoneTop.SetActive(false);
+                tutorialArrow.gameObject.SetActive(true);
+                //Взлететь до облаков
+                break;
+            case 70:
+                ProjectContext.instance.PauseManager.SetPause(false);
+                tutorialText.gameObject.SetActive(false);
+                tutorialBackImg.SetActive(false);
+                OkButton.gameObject.SetActive(false);
+                SetActiveInMainGame(true, false);
+                activeCoroutineForGetPlayerSpawn = StartCoroutine(DoActionWithTime(5f, () => {
+                    GlobalPlayerInfo.playerInfoModel.SetPlayerDistance(0);
+                    GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(200f);
+                }));
+                layerController.OnActiveZoneChanged += ActiveZoneChanged;
+                return;
+            
+            case 71:
+                //Тут надо поставить мин и макс высоты на облаках
+                ProjectContext.instance.PauseManager.SetPause(true);
+                tutorialText.gameObject.SetActive(true);
+                tutorialBackImg.SetActive(true);
+                OkButton.gameObject.SetActive(true);
+                tutorialArrow.gameObject.SetActive(false); 
+                playerFlyZoneTop.SetActive(true);
+                StopCoroutine(activeCoroutineForFrizePlayer); 
+                activeCoroutineForFrizePlayer = StartCoroutine(FrizePlayerInZone(maxPlayerFlyZoneCloud, minPlayerFlyZoneCloud));
+                GlobalPlayerInfo.playerInfoModel.SetPlayerDistance(0);
+                break;
+            case 72:
+                interactiveLayerController.SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum.BigCoin, new Vector3(70, ProjectContext.instance.PlayerController.gameObject.transform.position.y, ProjectContext.instance.PlayerController.gameObject.transform.position.z));
+                break;
+            case 73:
+                ProjectContext.instance.PauseManager.SetPause(false);
+                tutorialText.gameObject.SetActive(false);
+                tutorialBackImg.SetActive(false);
+                OkButton.gameObject.SetActive(false);
+                SetActiveInMainGame(true, false);
+                StartCoroutine(ContinueTutorialAfterTime(6f));
+                GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(100f);
+                counter--;
+                return;
+            case 74:
+                //показать индикатор пользователя
+                interactiveLayerController.SpawnObjectByObjectTypeAndPosition(InteractiveObjectEnum.NormalBirds, new Vector3(150, ProjectContext.instance.PlayerController.gameObject.transform.position.y, ProjectContext.instance.PlayerController.gameObject.transform.position.z));
+                break;
+            case 75:
+                StopCoroutine(activeCoroutineForGetPlayerSpawn); 
+                ProjectContext.instance.PauseManager.SetPause(false);
+                tutorialText.gameObject.SetActive(false);
+                tutorialBackImg.SetActive(false);
+                OkButton.gameObject.SetActive(false);
+                SetActiveInMainGame(true, false);
+                GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(100f);
+                StartCoroutine(ContinueTutorialAfterTime(6f));
+                counter++;
+                return;
+            case 76:
 
                 break;
+            case 77:
+                StopCoroutine(activeCoroutineForFrizePlayer);
+                StopTutorialInGame();
+                IsTutorialDone?.Invoke();
+                DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.SetPlayerIsFinishedTutorial(true);
+                break;
             default:
-                EndTutorialInGame();
                 break;
         }
         counter++;
     }
-    private void EndTutorialInGame()
+    private void StopTutorialInGame()
     {
         ProjectContext.instance.PauseManager.SetPause(false);
-        counter = 49;
         SetActiveInMainGame(true);
         tutorialText.gameObject.SetActive(true);
+        tutorialBackImg.SetActive(true);
         OkButton.gameObject.SetActive(true);
         this.gameObject.SetActive(false);
         playerFlyZone.SetActive(false);
         interactiveLayerController.IsAutoSpawnObjects = true;
-        DataBaseRepository.dataBaseRepository.PlayerFeaturesRepos.SetPlayerIsFinishedTutorial(true);
-        IsTutorialDone?.Invoke();
         GlobalPlayerInfo.playerInfoModel.AddPlayerSpeed(100f);
     }
     
@@ -360,23 +504,23 @@ public class TutorialController : MonoBehaviour
     private IEnumerator DisableOkButton()
     {
         OkButtonText.text = "...";
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1.5f);
         OkButton.interactable = true;
         OkButtonText.text = "Ok";
     }
     
-    private IEnumerator FrizePlayerInZone()
+    private IEnumerator FrizePlayerInZone(int? maxPlayerFlyZone, int? minPlayerFlyZone)
     {
         while (true)
         {
             var playerPos = ProjectContext.instance.PlayerController.gameObject.transform.position;
-            if (playerPos.y > maxPlayerFlyZone)
+            if (maxPlayerFlyZone.HasValue && playerPos.y > maxPlayerFlyZone)
             {
-                ProjectContext.instance.PlayerController.gameObject.transform.position = new Vector3(playerPos.x, maxPlayerFlyZone, playerPos.z);
+                ProjectContext.instance.PlayerController.gameObject.transform.position = new Vector3(playerPos.x, maxPlayerFlyZone.Value, playerPos.z);
             }
-            if (playerPos.y < minPlayerFlyZone)
+            if (minPlayerFlyZone.HasValue && playerPos.y < minPlayerFlyZone)
             {
-                ProjectContext.instance.PlayerController.gameObject.transform.position = new Vector3(playerPos.x, minPlayerFlyZone, playerPos.z);
+                ProjectContext.instance.PlayerController.gameObject.transform.position = new Vector3(playerPos.x, minPlayerFlyZone.Value, playerPos.z);
             }
             yield return new WaitForSeconds(0.01f);
         }
@@ -386,6 +530,7 @@ public class TutorialController : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToSetPause);
         tutorialText.gameObject.SetActive(true);
+        tutorialBackImg.SetActive(true);
         OkButton.gameObject.SetActive(true);
         ProjectContext.instance.PauseManager.SetPause(true);
         NextTutorialInGame();
@@ -397,8 +542,18 @@ public class TutorialController : MonoBehaviour
         ProjectContext.instance.PauseManager.SetPause(true);
         tutorialText.gameObject.SetActive(true);
         OkButton.gameObject.SetActive(true);
-    } 
+        tutorialBackImg.SetActive(true);
+    }
     
+    private IEnumerator DoActionWithTime(float timeToDo, Action action)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(timeToDo);
+            action?.Invoke();
+        }
+    }
+
     private IEnumerator ShowPlayerObject(GameObject obj)
     {
         lastGameObjectInShowCoroutine = obj;
@@ -407,6 +562,120 @@ public class TutorialController : MonoBehaviour
             obj.SetActive(!obj.activeSelf);
             yield return new WaitForSeconds(0.4f);
         }
+    }
+
+    private void PlayerPickUpItem(ItemData item)
+    {
+        if ((counter == 51 && item.Value > 0 && item.Key == ItemDataEnum.Coin)
+                ||
+                (counter == 54 && item.Value > 0 && item.Key == ItemDataEnum.Coin)
+                ||
+                (counter == 57 && item.Value > 0 && item.Key == ItemDataEnum.Speed)
+                ||
+                (counter == 72 && item.Value > 0 && item.Key == ItemDataEnum.Coin))
+        {
+            counter += 2;
+        }
     } 
 
+    private void ActiveZoneChanged(LayerWorldModel activeZone)
+    {
+        layerController.OnActiveZoneChanged -= ActiveZoneChanged;
+        counter++;
+        NextTutorialInGame();
+    }
+
+    private void OnItemBuy(IItem marketItem)
+    {
+        if(counter == 3 || marketItem.GetId() == 3)
+        {
+            counter = 4;
+        }
+        else if(counter == 5 || marketItem.GetId() == 20)
+        {
+            counter = 6;
+        }
+    }
+
+    private void OnMarketClose(IMarketBase currentMarket, IList<GameObject> marketItems)
+    {
+        if (currentMarket.GetMarketModel().MarketType == EnumMarkets.BoostPlayerItemsMarket && counter == 4)
+        {
+            counter = 5;
+            NextTutorialInMainMeny();
+        } 
+        else if (currentMarket.GetMarketModel().MarketType == EnumMarkets.UpdateBoostItemsMarket && counter == 6)
+        {
+            counter = 7;
+            NextTutorialInMainMeny();
+        } 
+        else
+        {
+            tutorialText.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnMarketOpen(IMarketBase currentMarket, IList<GameObject> marketItems)
+    {
+        if (currentMarket.GetMarketModel().MarketType == EnumMarkets.BoostPlayerItemsMarket && counter == 3)
+        {
+            tutorialText.gameObject.SetActive(false);
+            for (int i = 0; i < marketItems.Count; i++)
+            {
+                var item = marketItems[i].GetComponent<BoostPlayerItemMarketUI>();
+                if (item.itemModel.Id != 3)
+                {
+                    item.SetItemUIState(Assets.Scripts.SGEngine.MarketFolder.EnumsMarket.EnumStatesItemMarket.Lock);
+                }
+            }
+
+        }
+        else if(currentMarket.GetMarketModel().MarketType == EnumMarkets.UpdateBoostItemsMarket && counter == 5)
+        {
+            tutorialText.gameObject.SetActive(false);
+            for (int i = 0; i < marketItems.Count; i++)
+            {
+                var item = marketItems[i].GetComponent<UpgradeBoostGameItemUI>();
+                if (item.gameItem.Id != 20)
+                {
+                    item.SetItemUIState(Assets.Scripts.SGEngine.MarketFolder.EnumsMarket.EnumStatesItemMarket.Lock);
+                }
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        if(playerItemsController != null)
+        {
+            playerItemsController.IsItemPickUp -= PlayerPickUpItem;
+        }
+        if (layerController != null)
+        {
+            layerController.OnActiveZoneChanged -= ActiveZoneChanged;
+        }
+        if(activeCoroutineForViewPlayer != null)
+        {
+            StopCoroutine(activeCoroutineForViewPlayer);
+            activeCoroutineForViewPlayer = null;
+        }
+        if(activeCoroutineForFrizePlayer != null)
+        {
+            StopCoroutine(activeCoroutineForFrizePlayer);
+            activeCoroutineForFrizePlayer = null;
+        }
+        if(activeCoroutineForGetPlayerSpawn != null)
+        {
+            StopCoroutine(activeCoroutineForGetPlayerSpawn);
+            activeCoroutineForGetPlayerSpawn = null;
+        }
+
+        if (marketManagerUpdate != null)
+        {
+            marketManagerUpdate.OnMarketOpen -= OnMarketOpen;
+            marketManagerUpdate.OnItemBuy -= OnItemBuy;
+            marketManagerUpdate.OnMarketClose -= OnMarketClose;
+        }
+    }
+    
 }

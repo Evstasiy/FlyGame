@@ -30,6 +30,11 @@ public class GameRulesController : MonoBehaviour
                 gameOverCoroutine = StartCoroutine(WaitAndStartGameOver());
             }
         }
+        else if(GlobalPlayerInfo.playerInfoModel.FinalSpeed > PlayerInfoModel.MIN_SPEED && gameOverCoroutine != null)
+        {
+            StopCoroutine(gameOverCoroutine);
+            gameOverCoroutine = null;
+        }
         if((newPositionY <= ProjectContext.MIN_POS_Y || newPositionY >= ProjectContext.MAX_POS_Y))
         {
             if (gameOverCoroutine != null)

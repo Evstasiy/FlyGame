@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using YG;
 
 public class YDControl : ICommertialService
@@ -60,13 +59,7 @@ public class YDControl : ICommertialService
 
     public void ViewRewardADS(string rewardId)
     {
-        Task.Delay(1000);
-        var rewardsActionsIds = _actions.Where(x => x.Key.Contains(rewardId)).SelectMany(x=>x.Value).ToList();
-        foreach (var rewardActionId in rewardsActionsIds)
-        {
-            rewardActionId?.Invoke();
-        }
-        /**/
+        YG2.RewardedAdvShow(rewardId);
     }
 
     public void ViewADS()
@@ -121,7 +114,7 @@ public class YDControl : ICommertialService
 
                 _actions.Add(rewardId, new List<Action>() { onOpenRewardAdsMethod });
             }
-            //YG2.onRewardAdv += onOpenRewardAdsMethod;
+            YG2.onRewardAdv += (string rewardId) => { onOpenRewardAdsMethod(); };
             //YG2.onRewardAdv += OnRewardADS;// Для пропуска межстранички
         }
     }
@@ -133,7 +126,7 @@ public class YDControl : ICommertialService
         {
             _actions.Remove(rewardActionId);
         }
-        //YG2.onRewardAdv = null;
+        YG2.onRewardAdv = null;
     }
 
     void OnCloseAds()

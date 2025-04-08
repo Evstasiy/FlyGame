@@ -17,9 +17,6 @@ public class SkinsView : MonoBehaviour
     private GameObject skinUI;
 
     [SerializeField]
-    private GameObject worldObject;
-
-    [SerializeField]
     private Button selectedOrBuySkinBtn;
     [SerializeField]
     private TMP_Text actionSelectSkinText;
@@ -165,7 +162,6 @@ public class SkinsView : MonoBehaviour
         AudioController.Instance.PlayClip("Click");
         mainUI.SetActive(!isActive);
         skinUI.SetActive(isActive);
-        worldObject.SetActive(!isActive);
 
         previousSkinObj?.gameObject.SetActive(isActive);
         nextSkinObj?.gameObject.SetActive(isActive);

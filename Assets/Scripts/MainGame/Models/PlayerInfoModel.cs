@@ -24,7 +24,7 @@ namespace Assets.Scripts.MainGame.Models
         private float maxSpeedWithUpdates = BASE_SPEED;
 
         private float speed = 0;
-        private float baseDebuffSpeed = -0.1f;
+        private float baseDebuffSpeed = -0.15f;
 
         /// <summary>
         /// Дистанция игрока
@@ -66,11 +66,19 @@ namespace Assets.Scripts.MainGame.Models
 
         private float GetFinalSpeed() 
         {
-            //AddPlayerSpeed(baseDebuffSpeed);
-            playerDistance += (speed /550f) * Time.deltaTime;
             return speed;
         }
         
+        public void SetPlayerDistance(float newDistance)
+        {
+            playerDistance = newDistance;
+        }
+        
+        public void AddPlayerDistanceBySpeed()
+        {
+            playerDistance += (speed / 50f) * Time.deltaTime;
+        }
+
         public void AddPlayerSpeed(float speedAdd) 
         {
             var finalSpeed = speedAdd + speed;

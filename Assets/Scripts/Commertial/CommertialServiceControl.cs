@@ -59,6 +59,7 @@ public static class CommertialServiceControl
     {
         commertialService.SetActionOnRewardAds(onOpenRewardAdsMethod, rewardId);
     }
+
     public static void ClearActionsOnRewardAds()
     {
         commertialService.ClearActionsOnRewardAds();

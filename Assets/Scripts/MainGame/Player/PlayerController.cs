@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
             main.startSpeed = 0;
             return;
         }
+        GlobalPlayerInfo.playerInfoModel.AddPlayerDistanceBySpeed();
         if (isDebug)
         {
             GlobalPlayerInfo.playerInfoModel.AddPlayerMobility(38);

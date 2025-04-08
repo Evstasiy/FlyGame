@@ -133,6 +133,9 @@ public class Save_PlayerFeatureBase {
     [XmlAttribute(AttributeName = "playerDistanceRecord")]
     public int playerDistanceRecord { get; set; }
 
+    [XmlAttribute(AttributeName = "playerTutorialPoint")]
+    public int playerTutorialPoint { get; set; }
+
 }
 [XmlRoot(ElementName = "Save_PlayerFeatureOptions")]
 public class Save_PlayerFeatureOptions {

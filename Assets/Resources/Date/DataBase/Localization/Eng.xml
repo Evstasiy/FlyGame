@@ -19,7 +19,7 @@
 	<item id="17" mainDescription="Too high!"/>
 	<item id="18" mainDescription="Achievements"/>
 	<item id="19" mainDescription="Buy"/>
-	<item id="20" mainDescription="Effect now:"/>
+	<item id="20" mainDescription="Purchased:"/>
 	
 	<item id="21" mainDescription="FAQ"/>
 	<item id="22" mainDescription="About Effects"/>
@@ -38,6 +38,7 @@
     <item id="35" mainDescription="Distance:"/>
     <item id="36" mainDescription="Record:"/>
     <item id="37" mainDescription="In the next flight, try to soar high up; a new level awaits you there!"/>
+    <item id="38" mainDescription="Get a 'Booster' by watching ads?"/>
     
     <item id = "50" mainDescription = "Earth"/>
     <item id = "51" mainDescription = "Clouds"/>
@@ -49,31 +50,39 @@
 	<item id="73" mainDescription="Boosters"/>
 	<item id="74" mainDescription="Main information"/>
 	
-	<item id="200" mainDescription="Hello there! Welcome to the Tutorial! Look who we've got here — it's your hero, ready to fly around the entire planet!"/>
-	<item id="201" mainDescription="See that square over there? It shows your hero's level! Next to it, you can see the accumulated experience and how much you need to reach the next level and become even better!"/>
-	<item id="202" mainDescription="Check out these gold coins — they are the main currency in the game! You can use them to buy upgrades for your hero, making the journey around the planet easier."/>
-	<item id="203" mainDescription="Wow! Do you see these crystals? They're real treasures, so rare that they unlock the coolest upgrades!"/>
-	<item id="204" mainDescription="Here's the settings button! Click it to open the menu where you can customize the game to your liking: adjust sound, select a language, and more."/>
-	<item id="205" mainDescription="In front of you is the upgrade shop button! Clicking it opens a portal to a world of incredible upgrades."/>
-	<item id="206" mainDescription="This button leads to the core of your hero's power! Here you can enhance his basic attributes, like maneuverability. Level them up to prepare your hero for any challenges ahead!"/>
-	<item id="207" mainDescription="The achievements button opens the doors to your hero's hall of fame! Here you can see all his accomplishments: from impressive leaderboard records to personal achievements earned during adventures."/>
-	<item id="208" mainDescription="Get ready to change your style! Here you will find an amazing collection of costumes for your hero. Choose one that highlights his uniqueness and adds flair to his adventures!"/>
-	<item id="209" mainDescription="It's time to embark on an exciting journey! Press 'Play' to start the game."/>
-	
-	<item id="250" mainDescription="You're in flight! Tap the left side of the screen (or press W) to fly up, and the right side (or press S) to fly down."/>
-	<item id="251" mainDescription="This gear icon in the upper left corner of the screen will take you to the world of settings."/>
-	<item id="252" mainDescription="See the level your hero is flying at now! Each level offers new challenges and discoveries."/>
-	<item id="253" mainDescription="Here you'll see the distance your hero has already covered and find out the total distance you need to overcome."/>
-	<item id="254" mainDescription="This is the money panel, displaying the amount your hero has collected during the flight. Coins can be spent on upgrading the hero and buying additional boosts."/>
-	<item id="255" mainDescription="Look at the speedometer — it has minimum and maximum marks to help maintain the necessary pace. If the speed drops too low, your hero will start to fall, try to avoid this!"/>
-	<item id="256" mainDescription="This is the effects panel — here are all the bonuses your hero found during the flight! These effects can be positive or negative."/>
-	<item id="258" mainDescription="Watch out! A flock of birds is rushing straight at you. Your task is to dodge them. But if you manage to fly between two birds, you'll get a valuable bonus."/>
-	<item id="260" mainDescription="Oh no, your speed is dropping! A big booster has appeared on your path, which can be unlocked in the upgrade shop, collect it to get an additional boost."/>
-	<item id="262" mainDescription="Hooray! Your collection of effects now includes acceleration — it provides a temporary speed increase. Your hero can get all such boosters in the upgrade shop."/>
-	<item id="263" mainDescription="At different altitudes, enemies await your hero, and one is already heading towards you! Try to dodge it to avoid negative effects!"/>
-	<item id="265" mainDescription="At the initial level, your hero quickly loses speed and can't fly fast or dodge well. To fix this, upgrade his basic attributes after the flight."/>
-	<item id="266" mainDescription="Developing your character requires coins, lots of coins! Collect coins on your path, they are right in front of you."/>
-	<item id="268" mainDescription="Congratulations, you have completed the basic hero course. All this knowledge will help you fly around the planet. Now you can embark on a free flight!"/>
+	<item id="200" mainDescription="Hello, hero! Time to fly around the planet!"/>
+	<item id="201" mainDescription="This button will send you into flight—press it!"/>
+	<item id="203" mainDescription="Upgrade your hero's max speed for coins in the upgrade shop."/>
+	<item id="204" mainDescription=""/>
+	<item id="205" mainDescription="Great! Now buy the Basic Boost in the boost shop."/>
+	<item id="206" mainDescription=""/>
+	<item id="207" mainDescription="Try flying now!"/>
+
+	<item id="250" mainDescription="Hold the left side of the screen (or W) to fly up, hold the right side (or S) to fly down."/>
+	<item id="251" mainDescription="Fly between the birds, but don’t crash into them! If you hit one, your hero will lose maneuverability."/>
+	<item id="252" mainDescription=""/>
+	<item id="253" mainDescription="The hero needs to collect coins for upgrades."/>
+	<item id="254" mainDescription="Collect the flying coins."/>
+	<item id="255" mainDescription=""/>
+	<item id="256" mainDescription="Great! Now check your current speed. Below are your minimum and maximum speeds."/>
+	<item id="257" mainDescription="Collect speed boosts to avoid falling."/>
+	<item id="258" mainDescription=""/>
+	<item id="259" mainDescription="Awesome! Now take flight!"/>
+	<item id="260" mainDescription="Oh no, your speed is dropping! A large booster has appeared on your path—you can unlock it in the upgrade shop. Collect it to get an extra speed boost!"/>
+	<item id="262" mainDescription="Hooray! You’ve unlocked the Speed Boost effect—it grants a temporary speed increase. Your hero can get all boosters like this in the upgrade shop."/>
+	<item id="263" mainDescription="Enemies lurk at different altitudes, and one is already charging at you! Try dodging to avoid negative effects!"/>
+	<item id="265" mainDescription="Look! Your max speed has increased!"/>
+	<item id="266" mainDescription="You’ve bought the Basic Booster—now it will appear during your flights!"/>
+	<item id="268" mainDescription="The hero has gained a speed boost effect. You can read more about effects in the main menu settings."/>
+	<item id="269" mainDescription="Now fly upward!"/>
+	<item id="270" mainDescription=""/>
+	<item id="271" mainDescription="Hooray! You’re in the clouds—it’s more dangerous here, but you can find more coins."/>
+	<item id="272" mainDescription="Collect the big coin."/>
+	<item id="273" mainDescription=""/>
+	<item id="274" mainDescription="Danger detected! Try to dodge."/>
+	<item id="275" mainDescription=""/>
+	<item id="276" mainDescription="Great! Now try flying around the planet!"/>
+	<item id="277" mainDescription="Congratulations! You’ve completed the hero’s basic training. These skills will help you orbit the planet. Now, you’re ready for free flight!"/>
   </UI_Localization>
 	<WorldObjects_Localization>
 		<Items_Localization>
@@ -128,7 +137,7 @@
 			</Game_Items_Update_Localization>
 			<Boost_Items_Localization>	
 				<item id="1" mainDescription="Maneuverability" secondaryDescription="+ agility for avoiding obstacles"/>
-				<item id="2" mainDescription="Speed Maintenance" secondaryDescription="+ reduced speed loss"/>
+				<item id="2" mainDescription="Aerodynamics" secondaryDescription="+ reduced speed loss"/>
 				<item id="3" mainDescription="Max Speed" secondaryDescription="+25 to maximum speed"/>
 			</Boost_Items_Localization>	
 			<Upgrade_Boost_Items_Localization>

@@ -20,7 +20,7 @@ namespace Assets.Scripts.SGEngine.DataBase.DataBaseModels
         #region Repositories
         List<IDataBaseRepository> dataBaseWorkers = new List<IDataBaseRepository>();
         public GameItemRepository GameItemRepos { get; private set; }
-        public UpgradeGameItemsRepository UpgradeGameItemsRepos { get; private set; }
+        //public UpgradeGameItemsRepository UpgradeGameItemsRepos { get; private set; }
         public UpgradeBoostItemsRepository UpgradBoostObjectsRepos { get; private set; }
         public BoostPlayerItemsRepository BoostObjectsRepos { get; private set; }
         public AchievementRepository AchievementRepos { get; private set; }
@@ -80,7 +80,7 @@ namespace Assets.Scripts.SGEngine.DataBase.DataBaseModels
 
             PlayerFeaturesRepos = new PlayerFeaturesRepository(saveGameInformation);
             GameItemRepos = new GameItemRepository(gameParameters.WorldObjects.Items, saveGameInformation);
-            UpgradeGameItemsRepos = new UpgradeGameItemsRepository(gameParameters.Upgrades, saveGameInformation);
+            //UpgradeGameItemsRepos = new UpgradeGameItemsRepository(gameParameters.Upgrades, saveGameInformation);
             UpgradBoostObjectsRepos = new UpgradeBoostItemsRepository(gameParameters.Upgrades, saveGameInformation);
             BoostObjectsRepos = new BoostPlayerItemsRepository(gameParameters.Upgrades, saveGameInformation);
             AchievementRepos = new AchievementRepository(gameParameters.WorldObjects.AchievementsItemsModel, saveGameInformation);
@@ -88,7 +88,7 @@ namespace Assets.Scripts.SGEngine.DataBase.DataBaseModels
             UITranslatorRepos = new UITranslatorRepository(gameParameters.UiItemsModel);
 
             dataBaseWorkers.Add(GameItemRepos);
-            dataBaseWorkers.Add(UpgradeGameItemsRepos);
+            //dataBaseWorkers.Add(UpgradeGameItemsRepos);
             dataBaseWorkers.Add(UpgradBoostObjectsRepos);
             dataBaseWorkers.Add(PlayerFeaturesRepos);
             dataBaseWorkers.Add(BoostObjectsRepos);
@@ -123,8 +123,6 @@ namespace Assets.Scripts.SGEngine.DataBase.DataBaseModels
             try 
             {
                 dataBase.SaveChanges(saveGameInformation);
-
-                //isChangeSaveFile(saveGameInformation);
                 return true;
             }
             catch (Exception ex) {
